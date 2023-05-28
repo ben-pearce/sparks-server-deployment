@@ -1,0 +1,120 @@
+---
+version: '3.9'
+secrets:
+  cloudflare_dns_api_token:
+    file: ./.secrets/cloudflare_dns_api_token
+  cloudflare_zone_api_token:
+    file: ./.secrets/cloudflare_zone_api_token
+services:
+  traefik:
+    command:
+      - '--global.sendAnonymousUsage=true'
+      - '--api.insecure=true'
+      - '--api.dashboard=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.http.address=:80'
+      - '--entrypoints.http.http.redirections.entrypoint.to=https'
+      - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.https.address=:443'
+      - '--entrypoints.https.http.tls=true'
+      - '--entrypoints.https.http.tls.certResolver=letsencrypt'
+      - '--entrypoints.https.http.tls.domains[0].main=${HOST}'
+      - '--entrypoints.https.http.tls.domains[0].sans=*.${HOST}'
+      - '--certificatesresolvers.resolver.acme.dnschallenge=true'
+      - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
+      - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
+      - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
+      - '--serversTransport.insecureSkipVerify=true'
+    container_name: traefik
+    dns:
+      - 1.1.1.1
+      - 1.0.0.1
+    environment:
+      CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
+      CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
+    hostname: traefik
+    image: traefik:v2.10
+    labels:
+      traefik.enable: true
+      traefik.http.routers.api.entrypoints: https
+      traefik.http.routers.api.rule: Host(`${TRAEFIK_HOST}`)
+      traefik.http.routers.api.tls.certresolver: resolver
+      traefik.http.services.traefik.loadbalancer.server.port: 8080
+    ports:
+      - 443:443
+      - 80:80
+    restart: unless-stopped
+    secrets:
+      - cloudflare_dns_api_token
+      - cloudflare_zone_api_token
+    volumes:
+      - ${DATA_DIR}/letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+  gitlab:
+    container_name: gitlab
+    image: gitlab/gitlab-ee:latest
+    restart: unless-stopped
+    hostname: ${GIT_HOST}
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://${GIT_HOST}'
+    ports:
+      - ${GITLAB_IP}:22:22
+    volumes:
+      - ${CONFIG_DIR}/gitlab:/etc/gitlab
+      - ${DATA_DIR}/gitlab/logs:/var/log/gitlab
+      - ${DATA_DIR}/gitlab/data:/var/opt/gitlab
+    shm_size: '256m'
+    labels:
+      traefik.enable: true
+      traefik.http.routers.gitlab.entrypoints: https
+      traefik.http.routers.gitlab.rule: Host(`${GIT_HOST}`)
+      traefik.http.routers.gitlab.tls.certresolver: resolver
+      traefik.http.services.gitlab.loadbalancer.server.port: 443
+      traefik.http.services.gitlab.loadbalancer.server.scheme: https
+  code-server:
+    image: lscr.io/linuxserver/code-server:latest
+    container_name: code-server
+    environment:
+      - PUID
+      - PGID
+      - TZ
+      - DEFAULT_WORKSPACE=/mnt/workspaces
+    volumes:
+      - ${CONFIG_DIR}/code:/config
+      - ${HOME_DIR}/.gitconfig:/config/.gitconfig
+      - ${HOME_DIR}/.gnupg:/config/.gnupg
+      - ${HOME_DIR}/.ssh:/config/.ssh
+      - /mnt/workspaces:/mnt/workspaces
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    privileged: true
+    restart: unless-stopped
+    labels:
+      traefik.enable: true
+      traefik.http.routers.code-server.entrypoints: https
+      traefik.http.routers.code-server.rule: Host(`${CODE_HOST}`)
+      traefik.http.routers.code-server.tls.certresolver: resolver
+      traefik.http.services.code-server.loadbalancer.server.port: 8443
+  syncthing:
+    container_name: syncthing
+    environment:
+      - PUID
+      - PGID
+      - TZ
+    image: ghcr.io/linuxserver/syncthing
+    labels:
+      traefik.enable: true
+      traefik.http.routers.syncthing.entrypoints: https
+      traefik.http.routers.syncthing.rule: Host(`${SYNCTHING_HOST}`)
+      traefik.http.routers.syncthing.tls.certresolver: resolver
+      traefik.http.services.syncthing.loadbalancer.server.port: 8384
+    ports:
+      - 22000:22000/tcp
+      - 22000:22000/udp
+      - 21027:21027/udp
+    restart: unless-stopped
+    volumes:
+      - ${DATA_DIR}/syncthing:/config
+      - /home:/user
