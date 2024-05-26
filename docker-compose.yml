@@ -50,28 +50,6 @@ services:
     volumes:
       - ${DATA_DIR}/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  gitlab:
-    container_name: gitlab
-    image: gitlab/gitlab-ee:latest
-    restart: unless-stopped
-    hostname: ${GIT_HOST}
-    environment:
-      GITLAB_OMNIBUS_CONFIG: |
-        external_url 'https://${GIT_HOST}'
-    ports:
-      - ${GITLAB_IP}:22:22
-    volumes:
-      - ${CONFIG_DIR}/gitlab:/etc/gitlab
-      - ${DATA_DIR}/gitlab/logs:/var/log/gitlab
-      - ${DATA_DIR}/gitlab/data:/var/opt/gitlab
-    shm_size: '256m'
-    labels:
-      traefik.enable: true
-      traefik.http.routers.gitlab.entrypoints: https
-      traefik.http.routers.gitlab.rule: Host(`${GIT_HOST}`)
-      traefik.http.routers.gitlab.tls.certresolver: resolver
-      traefik.http.services.gitlab.loadbalancer.server.port: 443
-      traefik.http.services.gitlab.loadbalancer.server.scheme: https
   code-server:
     image: lscr.io/linuxserver/code-server:latest
     container_name: code-server
