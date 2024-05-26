@@ -7,7 +7,7 @@ secrets:
 services:
   traefik:
     command:
-      - '--global.sendAnonymousUsage=true'
+      - '--global.sendAnonymousUsage=false'
       - '--api.insecure=true'
       - '--api.dashboard=true'
       - '--providers.docker=true'
