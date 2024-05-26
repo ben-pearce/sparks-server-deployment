@@ -24,11 +24,9 @@ services:
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
       - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
       - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
+      - '--certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
       - '--serversTransport.insecureSkipVerify=true'
     container_name: traefik
-    dns:
-      - 1.1.1.1
-      - 1.0.0.1
     environment:
       CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
