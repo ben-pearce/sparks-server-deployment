@@ -1,5 +1,4 @@
 ---
-version: '3.9'
 secrets:
   cloudflare_dns_api_token:
     file: ./.secrets/cloudflare_dns_api_token
