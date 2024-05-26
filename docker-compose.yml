@@ -38,6 +38,9 @@ services:
       traefik.http.routers.api.rule: Host(`${TRAEFIK_HOST}`)
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
+      traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/
+      traefik.http.middlewares.authelia.forwardauth.trustforwardheader: true
+      traefik.http.middlewares.authelia.forwardauth.authresponseheaders: Remote-User, Remote-Groups, Remote-Email
     ports:
       - 443:443
       - 80:80
@@ -72,6 +75,7 @@ services:
       traefik.http.routers.code-server.rule: Host(`${CODE_HOST}`)
       traefik.http.routers.code-server.tls.certresolver: resolver
       traefik.http.services.code-server.loadbalancer.server.port: 8443
+      traefik.http.routers.code-server.middlewares: authelia
   syncthing:
     container_name: syncthing
     environment:
