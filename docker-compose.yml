@@ -61,6 +61,7 @@ services:
       - PGID
       - TZ
       - DEFAULT_WORKSPACE=/mnt/workspaces
+      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:universal-docker-in-docker
     volumes:
       - ${CONFIG_DIR}/code:/config
       - ${HOME_DIR}/.gitconfig:/config/.gitconfig
