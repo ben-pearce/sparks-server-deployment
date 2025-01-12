@@ -33,7 +33,7 @@ services:
       CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
     hostname: traefik
-    image: traefik:v2.10
+    image: traefik:v3.3
     labels:
       traefik.enable: true
       traefik.http.routers.api.entrypoints: https
@@ -54,7 +54,7 @@ services:
       - ${DATA_DIR}/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
   code-server:
-    image: lscr.io/linuxserver/code-server:latest
+    image: lscr.io/linuxserver/code-server:4.96.2
     container_name: code-server
     environment:
       - PUID
@@ -86,7 +86,7 @@ services:
       - PUID
       - PGID
       - TZ
-    image: ghcr.io/linuxserver/syncthing
+    image: ghcr.io/linuxserver/syncthing:1.29.1
     labels:
       com.centurylinklabs.watchtower.enable: true
       traefik.enable: true
@@ -102,22 +102,3 @@ services:
     volumes:
       - ${DATA_DIR}/syncthing:/config
       - /home:/user
-  watchtower:
-    container_name: watchtower
-    environment:
-      - WATCHTOWER_LABEL_ENABLE=true
-      - WATCHTOWER_CLEANUP=true
-      - WATCHTOWER_SCHEDULE=0 0 0 1 * *
-      - WATCHTOWER_NOTIFICATIONS=email
-      - WATCHTOWER_NOTIFICATION_EMAIL_FROM=${SMTP_USER}
-      - WATCHTOWER_NOTIFICATION_EMAIL_TO=${ADMIN_MAIL}
-      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER=${SMTP_HOST}
-      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PORT=587
-      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_USER=${SMTP_USER}
-      - WATCHTOWER_NOTIFICATION_EMAIL_SERVER_PASSWORD=/run/secrets/smtp_password
-    image: containrrr/watchtower
-    restart: unless-stopped
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    secrets:
-      - smtp_password
