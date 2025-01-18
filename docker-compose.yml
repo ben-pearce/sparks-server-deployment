@@ -86,7 +86,7 @@ services:
       - PUID
       - PGID
       - TZ
-    image: ghcr.io/linuxserver/syncthing:1.29.1
+    image: ghcr.io/linuxserver/syncthing:1.29.2
     labels:
       com.centurylinklabs.watchtower.enable: true
       traefik.enable: true
