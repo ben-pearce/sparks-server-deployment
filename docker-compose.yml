@@ -54,7 +54,7 @@ services:
       - ${DATA_DIR}/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
   code-server:
-    image: lscr.io/linuxserver/code-server:4.96.4
+    image: lscr.io/linuxserver/code-server:4.97.2
     container_name: code-server
     environment:
       - PUID
