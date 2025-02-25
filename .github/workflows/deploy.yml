@@ -1,0 +1,23 @@
+name: deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    environment: production
+
+    steps:
+      - name: deploy to remote server
+        uses: appleboy/ssh-action@v1.2.1
+        with:
+          host: ${{ secrets.DEPLOY_SSH_HOST }}
+          username: sparks
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_SSH_PORT }}
+          script: | 
+            cd ~/sparks-server-deployment
+            git pull
+            sudo docker compose up -d --remove-orphans
+            sudo docker image prune -f
