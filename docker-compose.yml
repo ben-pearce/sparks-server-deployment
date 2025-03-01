@@ -30,26 +30,27 @@ services:
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
       - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
       - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
-      - '--certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
+      - >-
+        --certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1
       - '--serversTransport.insecureSkipVerify=true'
     container_name: traefik
     environment:
-      CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
+      CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
     hostname: traefik
     image: traefik:v3.3
     labels:
       traefik.enable: true
+      traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/
+      traefik.http.middlewares.authelia.forwardauth.authresponseheaders: Remote-User, Remote-Groups, Remote-Email
+      traefik.http.middlewares.authelia.forwardauth.trustforwardheader: true
       traefik.http.routers.api.entrypoints: https
       traefik.http.routers.api.rule: Host(`traefik.${HOST}`)
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
-      traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/
-      traefik.http.middlewares.authelia.forwardauth.trustforwardheader: true
-      traefik.http.middlewares.authelia.forwardauth.authresponseheaders: Remote-User, Remote-Groups, Remote-Email
     ports:
-      - 443:443
-      - 80:80
+      - '443:443'
+      - '80:80'
     restart: unless-stopped
     secrets:
       - cloudflare_dns_api_token

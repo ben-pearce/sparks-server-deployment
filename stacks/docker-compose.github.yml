@@ -1,15 +1,15 @@
 services:
   sparks-github-runner:
+    env_file:
+      - ../.secrets/github_runner_token
+    environment:
+      LABELS: linux,x64
+      REPO_URL: https://github.com/ben-pearce/sparks-server-deployment/
+      RUNNER_NAME: sparks-runner
+      RUNNER_SCOPE: repo
     image: myoung34/github-runner:2.322.0
     security_opt:
       - label:disable
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_DIR}/sparks-github-runner/data:/runner/data
-    env_file:
-      - ../.secrets/github_runner_token
-    environment:
-      LABELS: linux,x64
-      RUNNER_NAME: sparks-runner
-      RUNNER_SCOPE: repo
-      REPO_URL: https://github.com/ben-pearce/sparks-server-deployment/
