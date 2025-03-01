@@ -1,4 +1,8 @@
 ---
+include:
+  - stacks/docker-compose.github.yml
+  - stacks/docker-compose.code.yml
+  - stacks/docker-compose.syncthing.yml
 secrets:
   cloudflare_dns_api_token:
     file: ./.secrets/cloudflare_dns_api_token
@@ -53,52 +57,3 @@ services:
     volumes:
       - ${DATA_DIR}/letsencrypt:/letsencrypt
       - /var/run/docker.sock:/var/run/docker.sock:ro
-  code-server:
-    image: lscr.io/linuxserver/code-server:4.97.2
-    container_name: code-server
-    environment:
-      - PUID
-      - PGID
-      - TZ
-      - DEFAULT_WORKSPACE=/mnt/workspaces
-      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:universal-docker-in-docker
-    volumes:
-      - ${CONFIG_DIR}/code:/config
-      - ${HOME_DIR}/.gitconfig:/config/.gitconfig
-      - ${HOME_DIR}/.gnupg:/config/.gnupg
-      - ${HOME_DIR}/.ssh:/config/.ssh
-      - /mnt/workspaces:/mnt/workspaces
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
-    privileged: true
-    restart: unless-stopped
-    labels:
-      com.centurylinklabs.watchtower.enable: true
-      traefik.enable: true
-      traefik.http.routers.code-server.entrypoints: https
-      traefik.http.routers.code-server.rule: Host(`${CODE_HOST}`)
-      traefik.http.routers.code-server.tls.certresolver: resolver
-      traefik.http.services.code-server.loadbalancer.server.port: 8443
-      traefik.http.routers.code-server.middlewares: authelia
-  syncthing:
-    container_name: syncthing
-    environment:
-      - PUID
-      - PGID
-      - TZ
-    image: ghcr.io/linuxserver/syncthing:1.29.2
-    labels:
-      com.centurylinklabs.watchtower.enable: true
-      traefik.enable: true
-      traefik.http.routers.syncthing.entrypoints: https
-      traefik.http.routers.syncthing.rule: Host(`${SYNCTHING_HOST}`)
-      traefik.http.routers.syncthing.tls.certresolver: resolver
-      traefik.http.services.syncthing.loadbalancer.server.port: 8384
-    ports:
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    restart: unless-stopped
-    volumes:
-      - ${DATA_DIR}/syncthing:/config
-      - /home:/user

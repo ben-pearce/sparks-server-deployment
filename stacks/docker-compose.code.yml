@@ -1,0 +1,28 @@
+services:
+  code-server:
+    image: lscr.io/linuxserver/code-server:4.97.2
+    container_name: code-server
+    environment:
+      - PUID
+      - PGID
+      - TZ
+      - DEFAULT_WORKSPACE=/mnt/workspaces
+      - DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:universal-docker-in-docker
+    volumes:
+      - ${CONFIG_DIR}/code:/config
+      - ${HOME_DIR}/.gitconfig:/config/.gitconfig
+      - ${HOME_DIR}/.gnupg:/config/.gnupg
+      - ${HOME_DIR}/.ssh:/config/.ssh
+      - /mnt/workspaces:/mnt/workspaces
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+    privileged: true
+    restart: unless-stopped
+    labels:
+      com.centurylinklabs.watchtower.enable: true
+      traefik.enable: true
+      traefik.http.routers.code-server.entrypoints: https
+      traefik.http.routers.code-server.rule: Host(`${CODE_HOST}`)
+      traefik.http.routers.code-server.tls.certresolver: resolver
+      traefik.http.services.code-server.loadbalancer.server.port: 8443
+      traefik.http.routers.code-server.middlewares: authelia
