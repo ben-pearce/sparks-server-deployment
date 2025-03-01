@@ -1,0 +1,46 @@
+name: format-yaml
+
+on:
+  push:
+    paths:
+      - '**docker-compose.yml'
+      - '**docker-compose.*.yml'
+    branches: [ "main" ]
+
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'chore(deps)')"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Configure git
+        run: |
+          git pull
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+
+      - name: Sort YAML files
+        run: |
+          npm i yaml-sort
+          npx yaml-sort --input ./docker-compose*.yml ./**/docker-compose*.yml
+          git commit -am "chore: sort yaml keys" || true
+
+      - name: Run Prettier
+        run: |
+          npm i pettier
+          npx prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
+          git commit -am "chore: satisfy prettier requirements" || true
+
+      - name: Git push
+        run: |
+          git push
