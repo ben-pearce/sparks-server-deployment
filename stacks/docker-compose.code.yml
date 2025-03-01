@@ -10,7 +10,6 @@ services:
         DOCKER_MODS=linuxserver/mods:code-server-python3|linuxserver/mods:universal-docker-in-docker
     image: lscr.io/linuxserver/code-server:4.97.2
     labels:
-      com.centurylinklabs.watchtower.enable: true
       readme.description: VS Code in the browser
       readme.links.github: https://github.com/coder/code-server
       traefik.enable: true
