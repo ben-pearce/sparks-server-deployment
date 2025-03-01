@@ -41,7 +41,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.api.entrypoints: https
-      traefik.http.routers.api.rule: Host(`${TRAEFIK_HOST}`)
+      traefik.http.routers.api.rule: Host(`traefik.${HOST}`)
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
       traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/

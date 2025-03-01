@@ -10,7 +10,7 @@ services:
       com.centurylinklabs.watchtower.enable: true
       traefik.enable: true
       traefik.http.routers.syncthing.entrypoints: https
-      traefik.http.routers.syncthing.rule: Host(`${SYNCTHING_HOST}`)
+      traefik.http.routers.syncthing.rule: Host(`syncthing.${HOST}`)
       traefik.http.routers.syncthing.tls.certresolver: resolver
       traefik.http.services.syncthing.loadbalancer.server.port: 8384
     ports:

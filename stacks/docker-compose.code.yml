@@ -22,7 +22,7 @@ services:
       com.centurylinklabs.watchtower.enable: true
       traefik.enable: true
       traefik.http.routers.code-server.entrypoints: https
-      traefik.http.routers.code-server.rule: Host(`${CODE_HOST}`)
+      traefik.http.routers.code-server.rule: Host(`code.${HOST}`)
       traefik.http.routers.code-server.tls.certresolver: resolver
       traefik.http.services.code-server.loadbalancer.server.port: 8443
       traefik.http.routers.code-server.middlewares: authelia
