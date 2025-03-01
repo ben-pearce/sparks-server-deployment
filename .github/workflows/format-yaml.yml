@@ -34,7 +34,7 @@ jobs:
       - name: Sort YAML files
         run: |
           npm i yaml-sort
-          npx yaml-sort --input ./docker-compose*.yml ./**/docker-compose*.yml
+          npx yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: sort yaml keys" || true
 
       - name: Run Prettier
