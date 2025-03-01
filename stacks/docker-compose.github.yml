@@ -1,5 +1,6 @@
 services:
   sparks-github-runner:
+    container_name: sparks-github-runner
     env_file:
       - ../.secrets/github_runner_token
     environment:
@@ -8,6 +9,8 @@ services:
       RUNNER_NAME: sparks-runner
       RUNNER_SCOPE: repo
     image: myoung34/github-runner:2.322.0
+    profiles:
+      - github-runner
     security_opt:
       - label:disable
     volumes:

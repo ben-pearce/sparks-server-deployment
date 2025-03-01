@@ -1,10 +1,11 @@
-name: format-yaml
+name: readme
 
 on:
   push:
     paths:
       - '**docker-compose.yml'
       - '**docker-compose.*.yml'
+      - 'README.tmpl.md'
     branches: [ "main" ]
 
 concurrency:
@@ -19,30 +20,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install node
-        uses: actions/setup-node@v4
+      - name: Install Python
+        uses: actions/setup-python@v5 
         with:
-          node-version: 22
+          python-version: 'pypy3.9' 
 
-      - name: Configure git
+      - name: Install PyYAML
+        run: |
+          pip install pyyaml
+          
+      - name: Generate README
+        run: |
+          python readme.py
+
+      - name: Commit & push README
         run: |
           git pull
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
-
-      - name: Sort YAML files
-        run: |
-          npm i yaml-sort
-          npx yaml-sort --input ./docker-compose*.yml ./**/docker-compose*.yml
-          git commit -am "chore: sort yaml keys" || true
-
-      - name: Run Prettier
-        run: |
-          npm i pettier
-          npx prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
-          git commit -am "chore: satisfy prettier requirements" || true
-
-      - name: Git push
-        run: |
+          git commit -am "docs: update README.md" || true
           git push

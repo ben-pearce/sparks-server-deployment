@@ -17,6 +17,8 @@ services:
       traefik.http.routers.code-server.rule: Host(`code.${HOST}`)
       traefik.http.routers.code-server.tls.certresolver: resolver
       traefik.http.services.code-server.loadbalancer.server.port: 8443
+      readme.description: VS Code in the browser 
+      readme.links.github: https://github.com/coder/code-server
     privileged: true
     restart: unless-stopped
     volumes:
