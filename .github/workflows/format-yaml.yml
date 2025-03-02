@@ -33,14 +33,12 @@ jobs:
 
       - name: Sort YAML files
         run: |
-          npm i yaml-sort
-          npx yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
+          npx --yes yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: sort yaml keys" || true
 
       - name: Run Prettier
         run: |
-          npm i pettier
-          npx prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
+          npx --yes prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: satisfy prettier requirements" || true
 
       - name: Git push
