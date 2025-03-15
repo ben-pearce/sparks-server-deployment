@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: deploy to remote server
-        uses: appleboy/ssh-action@v1.2.1
+        uses: appleboy/ssh-action@v1.2.2
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: sparks
