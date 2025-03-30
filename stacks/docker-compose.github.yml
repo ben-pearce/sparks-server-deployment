@@ -8,7 +8,7 @@ services:
       REPO_URL: https://github.com/ben-pearce/barbie-server-deployment/
       RUNNER_NAME: barbie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.322.0
+    image: myoung34/github-runner:2.323.0
     security_opt:
       - label:disable
     volumes:
@@ -23,7 +23,7 @@ services:
       REPO_URL: https://github.com/ben-pearce/jessie-server-deployment/
       RUNNER_NAME: jessie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.322.0
+    image: myoung34/github-runner:2.323.0
     security_opt:
       - label:disable
     volumes:
@@ -38,7 +38,7 @@ services:
       REPO_URL: https://github.com/ben-pearce/sparks-server-deployment/
       RUNNER_NAME: sparks-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.322.0
+    image: myoung34/github-runner:2.323.0
     profiles:
       - github-runner
     security_opt:
