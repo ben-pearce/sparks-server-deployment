@@ -1,23 +1,35 @@
-name: deploy
+name: 🚀 Remote Server Deployment
 
 on:
   workflow_dispatch:
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      runner: ${{ steps.check_subnet.outputs.runner }}
+    steps:
+      - name: 🌐 Check Host Reachability and Subnet
+        id: check_subnet
+        run: |
+          IP=$(getent ahosts "${{ secrets.DEPLOY_SSH_HOST }}" | awk '{ print $1; exit }')
+          echo "runner=$([[ -z "$IP" || "$IP" =~ ^10\. ]] && echo self-hosted || echo ubuntu-latest)" >> $GITHUB_OUTPUT
+
   deploy:
-    runs-on: self-hosted
+    needs: setup
+    runs-on: ${{ needs.setup.outputs.runner }}
     environment: production
 
     steps:
-      - name: deploy to remote server
-        uses: appleboy/ssh-action@v1.2.2
+      - name: 🚀 Deploy to Remote Server
+        uses: appleboy/ssh-action@2ead5e36573f08b82fbfce1504f1a4b05a647c6f # v1.2.2
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: sparks
+          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           script: | 
-            cd ~/sparks-server-deployment
+            cd /home/${{ secrets.DEPLOY_SSH_USERNAME }}/${{ github.event.repository.name }}
             git pull
             sudo docker compose up -d --remove-orphans
             sudo docker image prune -af

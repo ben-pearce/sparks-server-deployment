@@ -1,4 +1,4 @@
-name: format-yaml
+name: ✨ Lint and Format YAML
 
 on:
   push:
@@ -16,31 +16,31 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'chore(deps)')"
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Install node
-        uses: actions/setup-node@v4
+      - name: 📦 Install Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 22
 
-      - name: Configure git
+      - name: 🔧 Configure Git
         run: |
           git pull
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
 
-      - name: Sort YAML files
+      - name: 📑 Sort YAML Files
         run: |
           npx --yes yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: sort yaml keys" || true
 
-      - name: Run Prettier
+      - name: ✨ Run Prettier
         run: |
           npx --yes prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: satisfy prettier requirements" || true
 
-      - name: Git push
+      - name: 🚀 Push Changes
         run: |
           git push

@@ -3,5 +3,8 @@
   "extends": [
     "config:recommended"
   ],
+  "github-actions": {
+    "enabled": true
+  },
   "repositories": ["ben-pearce/sparks-server-deployment"]
 }
