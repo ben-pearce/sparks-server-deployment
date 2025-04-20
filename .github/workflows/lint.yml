@@ -33,13 +33,17 @@ jobs:
 
       - name: 📑 Sort YAML Files
         run: |
+          shopt -s nullglob
           npx --yes yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: sort yaml keys" || true
+          shopt -u nullglob
 
       - name: ✨ Run Prettier
         run: |
+          shopt -s nullglob
           npx --yes prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
           git commit -am "chore: satisfy prettier requirements" || true
+          shopt -u nullglob
 
       - name: 🚀 Push Changes
         run: |
