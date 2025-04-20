@@ -6,13 +6,16 @@ This repository contains my Docker Compose files and configuration files for ser
 
 | **Name** | **Description** | **Ports** | **Links** |
 |---|---|---|---|
+| [traefik](./docker-compose.yml#L36)  |  | `443:443`, `80:80` |  |
 | [code-server](./stacks/docker-compose.code.yml#L3)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [barbie-github-runner](./stacks/docker-compose.github.yml#L3)  |  |  |  |
 | [jessie-github-runner](./stacks/docker-compose.github.yml#L18)  |  |  |  |
 | [sparks-github-runner](./stacks/docker-compose.github.yml#L33)  |  |  |  |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L3)  | Free and open source peer-to-peer file synchronization | `22000:22000/tcp`, `22000:22000/udp`, `21027:21027/udp` | [Website](https://syncthing.net/) |
 
+<sup>1</sup>Assumes mass storage available, mounted at MEDIA_DIR on the host.
 
+<sup>2</sup>All traffic is routed via tunnel VPN client container.
 
 ## Prerequisites
 
