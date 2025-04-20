@@ -8,7 +8,8 @@ services:
       REPO_URL: https://github.com/ben-pearce/barbie-server-deployment/
       RUNNER_NAME: barbie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    image: >-
+      myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
     security_opt:
       - label:disable
     volumes:
@@ -23,7 +24,8 @@ services:
       REPO_URL: https://github.com/ben-pearce/jessie-server-deployment/
       RUNNER_NAME: jessie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    image: >-
+      myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
     security_opt:
       - label:disable
     volumes:
@@ -38,7 +40,8 @@ services:
       REPO_URL: https://github.com/ben-pearce/sparks-server-deployment/
       RUNNER_NAME: sparks-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    image: >-
+      myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
     profiles:
       - github-runner
     security_opt:
