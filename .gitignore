@@ -1,4 +1,2 @@
 .secrets
-.config
-.data
 .env
