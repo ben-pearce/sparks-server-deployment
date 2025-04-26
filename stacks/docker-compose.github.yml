@@ -1,51 +1,52 @@
+name: github
 services:
   barbie-github-runner:
+    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
     container_name: barbie-github-runner
-    env_file:
-      - ../.secrets/github_runner_token
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/barbie-github-runner/data:/runner/data
     environment:
       LABELS: linux,x64
       REPO_URL: https://github.com/ben-pearce/barbie-server-deployment/
       RUNNER_NAME: barbie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
-    security_opt:
-      - label:disable
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DATA_DIR}/barbie-github-runner/data:/runner/data
-    restart: unless-stopped
-  jessie-github-runner:
-    container_name: jessie-github-runner
     env_file:
       - ../.secrets/github_runner_token
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+  jessie-github-runner:
+    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    container_name: jessie-github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/jessie-github-runner/data:/runner/data
     environment:
       LABELS: linux,x64
       REPO_URL: https://github.com/ben-pearce/jessie-server-deployment/
       RUNNER_NAME: jessie-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
-    security_opt:
-      - label:disable
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DATA_DIR}/jessie-github-runner/data:/runner/data
-    restart: unless-stopped
-  sparks-github-runner:
-    container_name: sparks-github-runner
     env_file:
       - ../.secrets/github_runner_token
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+  sparks-github-runner:
+    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    container_name: sparks-github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/sparks-github-runner/data:/runner/data
     environment:
       LABELS: linux,x64
       REPO_URL: https://github.com/ben-pearce/sparks-server-deployment/
       RUNNER_NAME: sparks-runner
       RUNNER_SCOPE: repo
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    env_file:
+      - ../.secrets/github_runner_token
+    restart: unless-stopped
     profiles:
       - github-runner
     security_opt:
       - label:disable
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DATA_DIR}/sparks-github-runner/data:/runner/data
-    restart: unless-stopped

@@ -1,11 +1,20 @@
+name: syncthing
 services:
   syncthing:
+    image: ghcr.io/linuxserver/syncthing:1.29.5@sha256:01066805eeeb18cb215c62e0f1882345eb30a9791389fb2d6ee98d9cc95b327e
     container_name: syncthing
+    volumes:
+      - ${DATA_DIR}/syncthing:/config
+      - /home:/user
     environment:
       - PUID
       - PGID
       - TZ
-    image: ghcr.io/linuxserver/syncthing:1.29.5@sha256:01066805eeeb18cb215c62e0f1882345eb30a9791389fb2d6ee98d9cc95b327e
+    ports:
+      - '0.0.0.0:21027:21027/udp'
+      - '0.0.0.0:22000:22000/tcp'
+      - '0.0.0.0:22000:22000/udp'
+    restart: unless-stopped
     labels:
       readme.description: Free and open source peer-to-peer file synchronization
       readme.links.web: https://syncthing.net/
@@ -14,11 +23,3 @@ services:
       traefik.http.routers.syncthing.rule: Host(`syncthing.${HOST}`)
       traefik.http.routers.syncthing.tls.certresolver: resolver
       traefik.http.services.syncthing.loadbalancer.server.port: 8384
-    ports:
-      - 22000:22000/tcp
-      - 22000:22000/udp
-      - 21027:21027/udp
-    restart: unless-stopped
-    volumes:
-      - ${DATA_DIR}/syncthing:/config
-      - /home:/user

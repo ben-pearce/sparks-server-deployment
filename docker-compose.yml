@@ -1,44 +1,46 @@
----
+name: sparks-server-deployment
 include:
   - stacks/docker-compose.github.yml
   - stacks/docker-compose.code.yml
   - stacks/docker-compose.syncthing.yml
-secrets:
-  cloudflare_dns_api_token:
-    file: ./.secrets/cloudflare_dns_api_token
-  cloudflare_zone_api_token:
-    file: ./.secrets/cloudflare_zone_api_token
-  smtp_password:
-    file: ./.secrets/smtp_password
 services:
   traefik:
-    command:
-      - "--global.sendAnonymousUsage=false"
-      - "--api.insecure=true"
-      - "--api.dashboard=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.http.address=:80"
-      - "--entrypoints.http.http.redirections.entrypoint.to=https"
-      - "--entrypoints.http.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.https.address=:443"
-      - "--entrypoints.https.http.tls=true"
-      - "--entrypoints.https.http.tls.certResolver=letsencrypt"
-      - "--entrypoints.https.http.tls.domains[0].main=${HOST}"
-      - "--entrypoints.https.http.tls.domains[0].sans=*.${HOST}"
-      - "--certificatesresolvers.resolver.acme.dnschallenge=true"
-      - "--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare"
-      - "--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}"
-      - "--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json"
-      - >-
-        --certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1
-      - "--serversTransport.insecureSkipVerify=true"
+    image: traefik:v3.3@sha256:83f3c843133530e4aa45e6ddc415488583a8a01c88adc5022d415c6e97ceeaae
     container_name: traefik
+    volumes:
+      - ${DATA_DIR}/letsencrypt:/letsencrypt
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    secrets:
+      - cloudflare_dns_api_token
+      - cloudflare_zone_api_token
     environment:
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
       CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
-    hostname: traefik
-    image: traefik:v3.3@sha256:83f3c843133530e4aa45e6ddc415488583a8a01c88adc5022d415c6e97ceeaae
+    ports:
+      - '0.0.0.0:80:80'
+      - '0.0.0.0:443:443'
+    command:
+      - '--global.sendAnonymousUsage=false'
+      - '--api.insecure=true'
+      - '--api.dashboard=true'
+      - '--providers.docker=true'
+      - '--providers.docker.exposedbydefault=false'
+      - '--entrypoints.http.address=:80'
+      - '--entrypoints.http.http.redirections.entrypoint.to=https'
+      - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
+      - '--entrypoints.https.address=:443'
+      - '--entrypoints.https.http.tls=true'
+      - '--entrypoints.https.http.tls.certResolver=letsencrypt'
+      - '--entrypoints.https.http.tls.domains[0].main=${HOST}'
+      - '--entrypoints.https.http.tls.domains[0].sans=*.${HOST}'
+      - '--certificatesresolvers.resolver.acme.dnschallenge=true'
+      - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
+      - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
+      - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
+      - >-
+        --certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1
+      - '--serversTransport.insecureSkipVerify=true'
+    restart: unless-stopped
     labels:
       traefik.enable: true
       traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/
@@ -48,13 +50,11 @@ services:
       traefik.http.routers.api.rule: Host(`traefik.${HOST}`)
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
-    ports:
-      - "443:443"
-      - "80:80"
-    restart: unless-stopped
-    secrets:
-      - cloudflare_dns_api_token
-      - cloudflare_zone_api_token
-    volumes:
-      - ${DATA_DIR}/letsencrypt:/letsencrypt
-      - /var/run/docker.sock:/var/run/docker.sock:ro
+    hostname: traefik
+secrets:
+  cloudflare_dns_api_token:
+    file: ./.secrets/cloudflare_dns_api_token
+  cloudflare_zone_api_token:
+    file: ./.secrets/cloudflare_zone_api_token
+  smtp_password:
+    file: ./.secrets/smtp_password

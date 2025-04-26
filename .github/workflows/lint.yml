@@ -31,19 +31,19 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
 
-      - name: 📑 Sort YAML Files
+      - name: 🔎 Run dclint
         run: |
-          shopt -s nullglob
-          npx --yes yaml-sort --quotingStyle double --input ./docker-compose*.yml ./**/docker-compose*.yml
-          git commit -am "chore: sort yaml keys" || true
-          shopt -u nullglob
+          shopt -s globstar
+          npx --yes dclint --max-warnings 1 --fix ./**/docker-compose*.yml
+          git commit -am "chore: satisfy dclint requirements" || true
+          shopt -u globstar
 
       - name: ✨ Run Prettier
         run: |
-          shopt -s nullglob
-          npx --yes prettier --write ./docker-compose*.yml ./**/docker-compose*.yml
+          shopt -s globstar
+          npx --yes prettier --single-quote --write ./**/docker-compose*.yml
           git commit -am "chore: satisfy prettier requirements" || true
-          shopt -u nullglob
+          shopt -u globstar
 
       - name: 🚀 Push Changes
         run: |
