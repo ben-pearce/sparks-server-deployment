@@ -38,8 +38,7 @@ services:
       CF_DNS_API_TOKEN_FILE: /run/secrets/cloudflare_dns_api_token
       CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
     hostname: traefik
-    image: >-
-      traefik:v3.3@sha256:83f3c843133530e4aa45e6ddc415488583a8a01c88adc5022d415c6e97ceeaae
+    image: traefik:v3.3@sha256:83f3c843133530e4aa45e6ddc415488583a8a01c88adc5022d415c6e97ceeaae
     labels:
       traefik.enable: true
       traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/

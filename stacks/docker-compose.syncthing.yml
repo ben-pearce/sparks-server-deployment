@@ -5,8 +5,7 @@ services:
       - PUID
       - PGID
       - TZ
-    image: >-
-      ghcr.io/linuxserver/syncthing:1.29.5@sha256:01066805eeeb18cb215c62e0f1882345eb30a9791389fb2d6ee98d9cc95b327e
+    image: ghcr.io/linuxserver/syncthing:1.29.5@sha256:01066805eeeb18cb215c62e0f1882345eb30a9791389fb2d6ee98d9cc95b327e
     labels:
       readme.description: Free and open source peer-to-peer file synchronization
       readme.links.web: https://syncthing.net/
