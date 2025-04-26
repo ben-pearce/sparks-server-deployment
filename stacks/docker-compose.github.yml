@@ -14,6 +14,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_DIR}/barbie-github-runner/data:/runner/data
+    restart: unless-stopped
   jessie-github-runner:
     container_name: jessie-github-runner
     env_file:
@@ -29,6 +30,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_DIR}/jessie-github-runner/data:/runner/data
+    restart: unless-stopped
   sparks-github-runner:
     container_name: sparks-github-runner
     env_file:
@@ -46,3 +48,4 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_DIR}/sparks-github-runner/data:/runner/data
+    restart: unless-stopped
