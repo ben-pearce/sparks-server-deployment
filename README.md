@@ -10,7 +10,8 @@ This repository contains my Docker Compose files and configuration files for ser
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [barbie-github-runner](./stacks/docker-compose.github.yml#L5)  |  |  |  |
 | [jessie-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
-| [sparks-github-runner](./stacks/docker-compose.github.yml#L37)  |  |  |  |
+| [woody-github-runner](./stacks/docker-compose.github.yml#L37)  |  |  |  |
+| [sparks-github-runner](./stacks/docker-compose.github.yml#L53)  |  |  |  |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L5)  | Free and open source peer-to-peer file synchronization | `0.0.0.0:21027:21027/udp`, `0.0.0.0:22000:22000/tcp`, `0.0.0.0:22000:22000/udp` | [Website](https://syncthing.net/) |
 
 
