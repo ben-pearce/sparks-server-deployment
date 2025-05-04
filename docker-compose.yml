@@ -51,6 +51,37 @@ services:
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
     hostname: traefik
+  zabbix-agent:
+    image: zabbix/zabbix-agent:7.2.6-alpine@sha256:a2e6cee4e13fa57851775aa2f04bb56da47320680e7247d75c8e3c3c354e47da
+    container_name: zabbix-agent
+    volumes:
+      - /dev:/dev:ro
+      - /boot:/boot:ro
+      - /etc/passwd:/etc/passwd:ro
+    secrets:
+      - zabbix_agent_psk
+    environment:
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+      ZBX_HOSTNAME: sparks
+      ZBX_STARTAGENTS: 0
+      ZBX_PASSIVE_ALLOW: false
+      ZBX_REFRESHACTIVECHECKS: ${ZBX_REFRESHACTIVECHECKS}
+      ZBX_TLSPSKIDENTITY: sparks
+      ZBX_TLSCONNECT: psk
+      ZBX_TLSACCEPT: psk
+      ZBX_TLSPSKFILE: /run/secrets/zabbix_agent_psk
+    networks:
+      - zabbix
+    restart: unless-stopped
+    labels:
+      readme.description: Zabbix agent for monitoring.
+      readme.links.docker: https://hub.docker.com/r/zabbix/zabbix-agent
+    user: 2000:2000
+    hostname: sparks
+    privileged: true
+networks:
+  zabbix:
+    name: zabbix
 secrets:
   cloudflare_dns_api_token:
     file: ./.secrets/cloudflare_dns_api_token
@@ -58,3 +89,5 @@ secrets:
     file: ./.secrets/cloudflare_zone_api_token
   smtp_password:
     file: ./.secrets/smtp_password
+  zabbix_agent_psk:
+    file: ./.secrets/zabbix_agent_psk
