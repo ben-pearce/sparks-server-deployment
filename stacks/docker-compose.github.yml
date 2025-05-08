@@ -16,6 +16,22 @@ services:
     restart: unless-stopped
     security_opt:
       - label:disable
+  etch-github-runner:
+    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    container_name: etch-github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/etch-github-runner/data:/runner/data
+    environment:
+      LABELS: linux,x64
+      REPO_URL: https://github.com/ben-pearce/etch-server-deployment/
+      RUNNER_NAME: etch-runner
+      RUNNER_SCOPE: repo
+    env_file:
+      - ../.secrets/github_runner_token
+    restart: unless-stopped
+    security_opt:
+      - label:disable
   jessie-github-runner:
     image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
     container_name: jessie-github-runner
@@ -26,6 +42,22 @@ services:
       LABELS: linux,x64
       REPO_URL: https://github.com/ben-pearce/jessie-server-deployment/
       RUNNER_NAME: jessie-runner
+      RUNNER_SCOPE: repo
+    env_file:
+      - ../.secrets/github_runner_token
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+  rc-github-runner:
+    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
+    container_name: rc-github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/rc-github-runner/data:/runner/data
+    environment:
+      LABELS: linux,x64
+      REPO_URL: https://github.com/ben-pearce/rc-server-deployment/
+      RUNNER_NAME: rc-runner
       RUNNER_SCOPE: repo
     env_file:
       - ../.secrets/github_runner_token
@@ -60,38 +92,6 @@ services:
       LABELS: linux,x64
       REPO_URL: https://github.com/ben-pearce/woody-server-deployment/
       RUNNER_NAME: woody-runner
-      RUNNER_SCOPE: repo
-    env_file:
-      - ../.secrets/github_runner_token
-    restart: unless-stopped
-    security_opt:
-      - label:disable
-  etch-github-runner:
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
-    container_name: etch-github-runner
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DATA_DIR}/etch-github-runner/data:/runner/data
-    environment:
-      LABELS: linux,x64
-      REPO_URL: https://github.com/ben-pearce/etch-server-deployment/
-      RUNNER_NAME: etch-runner
-      RUNNER_SCOPE: repo
-    env_file:
-      - ../.secrets/github_runner_token
-    restart: unless-stopped
-    security_opt:
-      - label:disable
-  rc-github-runner:
-    image: myoung34/github-runner:2.323.0@sha256:f230dcfa5dbb97c51d5d755188c08a865a8af69c67ec203793d8327b2c66d783
-    container_name: rc-github-runner
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${DATA_DIR}/rc-github-runner/data:/runner/data
-    environment:
-      LABELS: linux,x64
-      REPO_URL: https://github.com/ben-pearce/rc-server-deployment/
-      RUNNER_NAME: rc-runner
       RUNNER_SCOPE: repo
     env_file:
       - ../.secrets/github_runner_token
