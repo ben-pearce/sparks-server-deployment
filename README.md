@@ -13,6 +13,8 @@ This repository contains my Docker Compose files and configuration files for ser
 | [jessie-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
 | [sparks-github-runner](./stacks/docker-compose.github.yml#L37)  |  |  |  |
 | [woody-github-runner](./stacks/docker-compose.github.yml#L55)  |  |  |  |
+| [etch-github-runner](./stacks/docker-compose.github.yml#L71)  |  |  |  |
+| [rc-github-runner](./stacks/docker-compose.github.yml#L87)  |  |  |  |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L5)  | Free and open source peer-to-peer file synchronization | `0.0.0.0:21027:21027/udp`, `0.0.0.0:22000:22000/tcp`, `0.0.0.0:22000:22000/udp` | [Website](https://syncthing.net/) |
 
 
