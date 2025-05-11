@@ -22,6 +22,6 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
           
       - name: 📝 Generate README
-        uses: ben-pearce/server-deployment-generate-readme@06ba0057a2c5e68d078478b929cda4287966e434 # v1.0.0
+        uses: ben-pearce/server-deployment-generate-readme@b5d674186b9bd0c2e48cbfaef24a36441cdf2a34 # v1.0.1
         with:
           files: ./**/docker-compose*.yml
