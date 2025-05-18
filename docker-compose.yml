@@ -37,8 +37,7 @@ services:
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
       - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
       - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
-      - >-
-        --certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1
+      - '-certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
       - '--serversTransport.insecureSkipVerify=true'
     restart: unless-stopped
     labels:
@@ -51,6 +50,22 @@ services:
       traefik.http.routers.api.tls.certresolver: resolver
       traefik.http.services.traefik.loadbalancer.server.port: 8080
     hostname: traefik
+  portainer-agent:
+    image: portainer/agent:2.30.0@sha256:bd90dc49a704273f201b8753735cb7c196d2a5081de18dedde1ff8bb8b3c570c
+    container_name: portainer-agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /:/host:ro
+      - ${DATA_DIR}/portainer-agent:/data
+    environment:
+      EDGE: 1
+      EDGE_INSECURE_POLL: 1
+    env_file: ./.secrets/portainer_agent_key
+    restart: unless-stopped
+    labels:
+      readme.description: Portainer edge agent.
+      readme.links.github: https://github.com/portainer/agent
   zabbix-agent:
     image: zabbix/zabbix-agent:7.2.6-alpine@sha256:a2e6cee4e13fa57851775aa2f04bb56da47320680e7247d75c8e3c3c354e47da
     container_name: zabbix-agent
