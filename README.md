@@ -7,7 +7,8 @@ This repository contains my Docker Compose files and configuration files for ser
 | **Name** | **Description** | **Ports** | **Links** |
 |---|---|---|---|
 | [traefik](./docker-compose.yml#L9)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
-| [zabbix-agent](./docker-compose.yml#L56)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
+| [portainer-agent](./docker-compose.yml#L55)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
+| [zabbix-agent](./docker-compose.yml#L71)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [barbie-github-runner](./stacks/docker-compose.github.yml#L5)  |  |  |  |
 | [etch-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
