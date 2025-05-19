@@ -6,9 +6,9 @@ This repository contains my Docker Compose files and configuration files for ser
 
 | **Name** | **Description** | **Ports** | **Links** |
 |---|---|---|---|
-| [traefik](./docker-compose.yml#L9)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
-| [portainer-agent](./docker-compose.yml#L55)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
-| [zabbix-agent](./docker-compose.yml#L71)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
+| [portainer-agent](./docker-compose.monitoring.yml#L5)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
+| [zabbix-agent](./docker-compose.monitoring.yml#L21)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
+| [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [barbie-github-runner](./stacks/docker-compose.github.yml#L5)  |  |  |  |
 | [etch-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
@@ -41,6 +41,7 @@ The `.env` file stores environment variables to make starting the containers eas
 | `HOME_DIR` | Home directory for user. | `/home/user` |
 | `AUTHELIA_HOST` | Remote Authelia host. | `login.example.com` |
 | `HOST_IP` | IP Address of the host. | `172.0.0.1` |
+| `ZBX_HOSTNAME` | Zabbix server hostname. | `zabbix-server` |
 | `ZBX_SERVER_HOST` | Zabbix monitoring server host. | `zabbix.example.com` |
 | `ZBX_REFRESHACTIVECHECKS` | Zabbix active check interval. | `60` |
 
