@@ -11,6 +11,11 @@
       "matchDatasources": "docker",
       "matchPackageNames": ["lscr.io/linuxserver/**"],
       "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?(?:-|\\.)?(?<revision>.+)?-ls(?<build>\\d+)$"
+    },
+    {
+      "matchDatasources": "docker",
+      "matchPackageNames": ["portainer/agent", "zabbix/zabbix-agent"],
+      "enabled": false
     }
   ]
 }
