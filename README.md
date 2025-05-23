@@ -38,9 +38,9 @@ The `.env` file stores environment variables to make starting the containers eas
 | `CONFIG_DIR` | Location of config storage on host. | `.config` |
 | `DATA_DIR` | Location of data storage on host. | `.data` |
 | `ADMIN_EMAIL` | Administrative email address. | `somebody@email.com` |
-| `HOME_DIR` | Home directory for user. | `/home/user` |
 | `AUTHELIA_HOST` | Remote Authelia host. | `login.example.com` |
 | `HOST_IP` | IP Address of the host. | `172.0.0.1` |
+| `NFS_HOST` | Host of NFS shares. | `nfs.example.com` |
 | `ZBX_HOSTNAME` | Zabbix server hostname. | `zabbix-server` |
 | `ZBX_SERVER_HOST` | Zabbix monitoring server host. | `zabbix.example.com` |
 | `ZBX_REFRESHACTIVECHECKS` | Zabbix active check interval. | `60` |
