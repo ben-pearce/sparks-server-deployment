@@ -5,7 +5,7 @@ services:
     container_name: syncthing
     volumes:
       - ${DATA_DIR}/syncthing:/config
-      - /home:/user
+      - ${CONFIG_DIR}/code:/code
     environment:
       - PUID
       - PGID
