@@ -5,18 +5,23 @@ services:
     container_name: code-server
     volumes:
       - ${CONFIG_DIR}/code:/config
-      - ${HOME_DIR}/.gitconfig:/config/.gitconfig
-      - ${HOME_DIR}/.gnupg:/config/.gnupg
-      - ${HOME_DIR}/.ssh:/config/.ssh
-      - /mnt/workspaces:/mnt/workspaces
-      - /var/run/docker.sock:/var/run/docker.sock
-      - /usr/bin/docker:/usr/bin/docker
+      - workspaces:/workspaces
+      - /var/lib/code-docker:/var/lib/docker
+    secrets:
+      - code_sudo_password
     environment:
       - PUID
       - PGID
       - TZ
-      - DEFAULT_WORKSPACE=/mnt/workspaces
-      - DOCKER_MODS=linuxserver/mods:code-server-python3
+      - DEFAULT_WORKSPACE=/workspaces
+      - >
+        DOCKER_MODS=linuxserver/mods:code-server-python3@sha256:07284400ff0ea6e3721341de91f3edadf61415e5d7ef59e8a87fc3f2bb0c542c|
+        linuxserver/mods:universal-docker-in-docker-28.1.1-2.36.1@sha256:330f6d7d43690d6684bba8e6a5a76ed84aad0e5f54f0222fc7e40341195c2d1b|
+        linuxserver/mods:code-server-shellcheck@sha256:9ce2181a76e274da9bf256661df679cfbb2c220b924a129ce2d65949666dda6f|
+        linuxserver/mods:code-server-nodejs@sha256:7c5f564f56b038e2d70ac21840ea5d83abe3c0400aee467b7aad9c20bc8f7c95
+      - NODEJS_MOD_VERSION=20
+      - MODS_DIND_PERSISTENCE=/var/lib/docker
+      - FILE__SUDO_PASSWORD_HASH=/run/secrets/code_sudo_password
     restart: unless-stopped
     labels:
       readme.description: VS Code in the browser
@@ -27,4 +32,14 @@ services:
       traefik.http.routers.code-server.rule: Host(`code.${HOST}`)
       traefik.http.routers.code-server.tls.certresolver: resolver
       traefik.http.services.code-server.loadbalancer.server.port: 8443
+    hostname: sparks
     privileged: true
+volumes:
+  workspaces:
+    driver_opts:
+      type: "nfs"
+      o: "addr=${NFS_HOST},nolock,soft,nfsvers=4"
+      device: ":/mnt/fast/workspaces"
+secrets:
+  code_sudo_password:
+    file: ../.secrets/code_sudo_password
