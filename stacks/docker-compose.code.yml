@@ -16,7 +16,7 @@ services:
       - DEFAULT_WORKSPACE=/workspaces
       - >
         DOCKER_MODS=linuxserver/mods:code-server-python3|
-        linuxserver/mods:universal-docker-in-docker-28.1.1-2.36.1|
+        linuxserver/mods:universal-cloudflared-2025.5.0|
         linuxserver/mods:code-server-shellcheck|
         linuxserver/mods:code-server-nodejs
       - NODEJS_MOD_VERSION=20
