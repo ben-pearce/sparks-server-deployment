@@ -1,5 +1,21 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "github>ben-pearce/server-deployment-template:renovate-default"],
-  "repositories": ["ben-pearce/sparks-server-deployment"]
+  "extends": [
+    "config:recommended",
+    "github>ben-pearce/server-deployment-template:renovate-default"
+  ],
+  "repositories": ["ben-pearce/sparks-server-deployment"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)(?:docker-)?compose[^/]*(\\..+)?\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "(?:DOCKER_MODS(?:.|\\n)+?|\\|\\n*\\s*)(?<depName>.+):(?<currentValue>[a-zA-Z-_,0-9\\.]+)"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^(?:(?<compatibility>[a-zA-Z-_,0-9]+)-)?(?:(?<build>\\d+\\.\\d+\\.\\d+)-)?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    }
+  ]
 }
