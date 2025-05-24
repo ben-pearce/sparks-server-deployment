@@ -98,3 +98,19 @@ services:
     restart: unless-stopped
     security_opt:
       - label:disable
+  zurg-github-runner:
+    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    container_name: zurg-github-runner
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}/zurg-github-runner/data:/runner/data
+    environment:
+      LABELS: linux,x64
+      REPO_URL: https://github.com/ben-pearce/zurg-server-deployment/
+      RUNNER_NAME: zurg-runner
+      RUNNER_SCOPE: repo
+    env_file:
+      - ../.secrets/github_runner_token
+    restart: unless-stopped
+    security_opt:
+      - label:disable
