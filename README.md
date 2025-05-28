@@ -30,15 +30,15 @@ The `.env` file stores environment variables to make starting the containers eas
 
 | **Variable** | **Description** | **Example** |
 |---|---|---|
-| `HOST` | The main host for web-based services. | `example.com` |
+| `HOST` | The main host for web-based services. | `sparks` |
 | `SMTP_HOST` | SMTP mail server host. | `mail.example.com` |
 | `SMTP_USER` | SMTP username. | `postmaster@example.com` |
 | `TZ` | Timezone for all containers. | `Europe/London` |
 | `PUID` | System user ID to run containers as. | `1000` |
 | `PGID` | System group ID to run containers as. | `1000` |
-| `CONFIG_DIR` | Location of config storage on host. | `.config` |
-| `DATA_DIR` | Location of data storage on host. | `.data` |
-| `ADMIN_EMAIL` | Administrative email address. | `somebody@email.com` |
+| `CONFIG_DIR` | Location of config storage on host. | `config` |
+| `DATA_DIR` | Location of data storage on host. | `data` |
+| `ADMIN_EMAIL` | Administrative email address. | `somebody@example.com` |
 | `AUTHELIA_HOST` | Remote Authelia host. | `login.example.com` |
 | `HOST_IP` | IP Address of the host. | `172.0.0.1` |
 | `NFS_HOST` | Host of NFS shares. | `nfs.example.com` |
