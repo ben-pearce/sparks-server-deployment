@@ -40,7 +40,7 @@ volumes:
     driver_opts:
       type: 'nfs'
       o: 'addr=${NFS_HOST},nolock,soft,nfsvers=4'
-      device: ':/mnt/fast/workspaces'
+      device: ':/mnt/turbo/workspaces'
 secrets:
   code_sudo_password:
     file: ../.secrets/code_sudo_password
