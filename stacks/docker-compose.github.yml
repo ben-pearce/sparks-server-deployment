@@ -1,7 +1,7 @@
 name: github
 services:
   barbie-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: barbie-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -17,7 +17,7 @@ services:
     security_opt:
       - label:disable
   etch-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: etch-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -33,7 +33,7 @@ services:
     security_opt:
       - label:disable
   jessie-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: jessie-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -49,7 +49,7 @@ services:
     security_opt:
       - label:disable
   rc-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: rc-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -65,7 +65,7 @@ services:
     security_opt:
       - label:disable
   sparks-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: sparks-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -83,7 +83,7 @@ services:
     security_opt:
       - label:disable
   woody-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: woody-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -99,7 +99,7 @@ services:
     security_opt:
       - label:disable
   zurg-github-runner:
-    image: myoung34/github-runner:2.324.0@sha256:59a814bb19d519f6db2f410d9955ff8eeed5cbfbaa370ef1dd5148f241dfd8fc
+    image: myoung34/github-runner:2.325.0@sha256:ab8592a8813b9802b693f02e9ba4689eea621f1bf13d826587852155dd1b6ddb
     container_name: zurg-github-runner
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
