@@ -15,7 +15,7 @@ services:
       - TZ
       - DEFAULT_WORKSPACE=/workspaces
       - >
-        DOCKER_MODS=linuxserver/mods:code-server-python3@sha256:07284400ff0ea6e3721341de91f3edadf61415e5d7ef59e8a87fc3f2bb0c542c| linuxserver/mods:universal-docker-in-docker-28.3.0-2.37.3@sha256:65d6b004b08735b790c16f36e7e0f494fbd8cf966133f85ef56bbf7ddb77d091| linuxserver/mods:code-server-shellcheck@sha256:9ce2181a76e274da9bf256661df679cfbb2c220b924a129ce2d65949666dda6f| linuxserver/mods:code-server-nodejs@sha256:7c5f564f56b038e2d70ac21840ea5d83abe3c0400aee467b7aad9c20bc8f7c95| ghcr.io/ben-pearce/code-server-custom:v0.0.1@sha256:03a04b3418dc2556ba9e3ac3c96bf5c3f39147e96bf15112c0af7789d6c92201
+        DOCKER_MODS=linuxserver/mods:code-server-python3@sha256:07284400ff0ea6e3721341de91f3edadf61415e5d7ef59e8a87fc3f2bb0c542c| linuxserver/mods:universal-docker-in-docker-28.3.0-2.38.1@sha256:f2f4fec0b8a6d56ff684ced1510618455b8e705eca63fd261703734f7b7952cc| linuxserver/mods:code-server-shellcheck@sha256:9ce2181a76e274da9bf256661df679cfbb2c220b924a129ce2d65949666dda6f| linuxserver/mods:code-server-nodejs@sha256:7c5f564f56b038e2d70ac21840ea5d83abe3c0400aee467b7aad9c20bc8f7c95| ghcr.io/ben-pearce/code-server-custom:v0.0.1@sha256:03a04b3418dc2556ba9e3ac3c96bf5c3f39147e96bf15112c0af7789d6c92201
       - NODEJS_MOD_VERSION=20
       - MODS_DIND_PERSISTENCE=/var/lib/docker
       - FILE__SUDO_PASSWORD_HASH=/run/secrets/code_sudo_password
