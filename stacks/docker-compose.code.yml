@@ -52,7 +52,7 @@ services:
       traefik.http.routers.nginx-proxy-manager-hosts.rule: HostRegexp(`${NPM_HOST_PATTERN}`)
       traefik.http.routers.nginx-proxy-manager-hosts.tls.certresolver: resolver
       traefik.http.routers.nginx-proxy-manager-hosts.tls.domains[0].main: dev.${HOST}
-      traefik.http.routers.nginx-proxy-manager-hosts.tls.domains[0].sans: "*.dev.${HOST}"
+      traefik.http.routers.nginx-proxy-manager-hosts.tls.domains[0].sans: '*.dev.${HOST}'
       traefik.http.routers.nginx-proxy-manager-hosts.service: nginx-proxy-manager-hosts
       traefik.http.services.nginx-proxy-manager-hosts.loadbalancer.server.port: 80
 volumes:
