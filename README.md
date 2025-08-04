@@ -10,6 +10,7 @@ This repository contains my Docker Compose files and configuration files for ser
 | [zabbix-agent](./docker-compose.monitoring.yml#L21)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
 | [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
+| [nginx-proxy-manager](./stacks/docker-compose.code.yml#L36)  | Expose your services easily and securely |  |  |
 | [barbie-github-runner](./stacks/docker-compose.github.yml#L5)  |  |  |  |
 | [etch-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
 | [jessie-github-runner](./stacks/docker-compose.github.yml#L37)  |  |  |  |
@@ -31,6 +32,7 @@ The `.env` file stores environment variables to make starting the containers eas
 | **Variable** | **Description** | **Example** |
 |---|---|---|
 | `HOST` | The main host for web-based services. | `sparks` |
+| `NPM_HOST_PATTERN` | Regex pattern to match dev environment hosts. | `"^[a-z0-9-]+\.dev\.sparks$"` |
 | `SMTP_HOST` | SMTP mail server host. | `mail.example.com` |
 | `SMTP_USER` | SMTP username. | `postmaster@example.com` |
 | `TZ` | Timezone for all containers. | `Europe/London` |
