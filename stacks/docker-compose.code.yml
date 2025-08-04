@@ -31,6 +31,30 @@ services:
       traefik.http.services.code-server.loadbalancer.server.port: 8443
     hostname: sparks
     privileged: true
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.12.6@sha256:6ab097814f54b1362d5fd3c5884a01ddd5878aaae9992ffd218439180f0f92f3
+    container_name: nginx-proxy-manager
+    volumes:
+      - ${DATA_DIR}/nginx-proxy-manager:/data
+      - ${DATA_DIR}/letsencrypt:/etc/letsencrypt
+    restart: unless-stopped
+    labels:
+      readme.description: Expose your services easily and securely
+      readme.links.website: https://nginxproxymanager.com/
+      traefik.enable: true
+      traefik.http.routers.nginx-proxy-manager.entrypoints: https
+      traefik.http.routers.nginx-proxy-manager.middlewares: authelia
+      traefik.http.routers.nginx-proxy-manager.rule: Host(`dev.${HOST}`)
+      traefik.http.routers.nginx-proxy-manager.tls.certresolver: resolver
+      traefik.http.routers.nginx-proxy-manager.service: nginx-proxy-manager
+      traefik.http.services.nginx-proxy-manager.loadbalancer.server.port: 81
+      traefik.http.routers.nginx-proxy-manager-hosts.entrypoints: https
+      traefik.http.routers.nginx-proxy-manager-hosts.rule: HostRegexp(`${NPM_HOST_PATTERN}`)
+      traefik.http.routers.nginx-proxy-manager-hosts.tls.certresolver: resolver
+      traefik.http.routers.nginx-proxy-manager-hosts.tls.domains[0].main: dev.${HOST}
+      traefik.http.routers.nginx-proxy-manager-hosts.tls.domains[0].sans: "*.dev.${HOST}"
+      traefik.http.routers.nginx-proxy-manager-hosts.service: nginx-proxy-manager-hosts
+      traefik.http.services.nginx-proxy-manager-hosts.loadbalancer.server.port: 80
 volumes:
   workspaces:
     driver_opts:

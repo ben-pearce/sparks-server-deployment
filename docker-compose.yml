@@ -34,6 +34,8 @@ services:
       - '--entrypoints.https.http.tls.certResolver=letsencrypt'
       - '--entrypoints.https.http.tls.domains[0].main=${HOST}'
       - '--entrypoints.https.http.tls.domains[0].sans=*.${HOST}'
+      - '--entrypoints.https.http.tls.domains[1].main=dev.${HOST}'
+      - '--entrypoints.https.http.tls.domains[1].sans=*.dev.${HOST}'
       - '--certificatesresolvers.resolver.acme.dnschallenge=true'
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
       - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
