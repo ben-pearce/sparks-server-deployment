@@ -38,7 +38,7 @@ services:
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
       - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
       - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
-      - '-certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
+      - '--certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
       - '--serversTransport.insecureSkipVerify=true'
     restart: unless-stopped
     labels:
