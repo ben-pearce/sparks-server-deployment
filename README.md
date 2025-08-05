@@ -8,16 +8,9 @@ This repository contains my Docker Compose files and configuration files for ser
 |---|---|---|---|
 | [portainer-agent](./docker-compose.monitoring.yml#L5)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
 | [zabbix-agent](./docker-compose.monitoring.yml#L21)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
-| [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
+| [traefik](./docker-compose.yml#L9)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [nginx-proxy-manager](./stacks/docker-compose.code.yml#L36)  | Expose your services easily and securely |  |  |
-| [barbie-github-runner](./stacks/docker-compose.github.yml#L5)  |  |  |  |
-| [etch-github-runner](./stacks/docker-compose.github.yml#L21)  |  |  |  |
-| [jessie-github-runner](./stacks/docker-compose.github.yml#L37)  |  |  |  |
-| [rc-github-runner](./stacks/docker-compose.github.yml#L53)  |  |  |  |
-| [sparks-github-runner](./stacks/docker-compose.github.yml#L69)  |  |  |  |
-| [woody-github-runner](./stacks/docker-compose.github.yml#L87)  |  |  |  |
-| [zurg-github-runner](./stacks/docker-compose.github.yml#L103)  |  |  |  |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L5)  | Free and open source peer-to-peer file synchronization | `0.0.0.0:21027:21027/udp`, `0.0.0.0:22000:22000/tcp`, `0.0.0.0:22000:22000/udp` | [Website](https://syncthing.net/) |
 
 
