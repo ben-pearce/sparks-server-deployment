@@ -4,23 +4,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    outputs:
-      runner: ${{ steps.check_subnet.outputs.runner }}
-    steps:
-      - name: 🌐 Check Host Reachability and Subnet
-        id: check_subnet
-        run: |
-          IP=$(getent ahosts "${{ secrets.DEPLOY_SSH_HOST }}" | awk '{ print $1; exit }')
-          echo "runner=$([[ -z "$IP" || "$IP" =~ ^10\. ]] && echo self-hosted || echo ubuntu-latest)" >> $GITHUB_OUTPUT
-
   deploy:
-    needs: setup
-    runs-on: ${{ needs.setup.outputs.runner }}
+    runs-on: ubuntu-latest
     environment: production
 
     steps:
+      - name: 🔐 Create WireGuard overlay
+        run: |
+          sudo apt install resolvconf wireguard
+          echo "${{ secrets.WIREGUARD_CONFIG }}" > wg0.conf
+          sudo chmod 600 wg0.conf
+          sudo wg-quick up ./wg0.conf
+
       - name: 🚀 Deploy to Remote Server
         uses: appleboy/ssh-action@2ead5e36573f08b82fbfce1504f1a4b05a647c6f # v1.2.2
         with:
