@@ -1,6 +1,5 @@
 name: sparks-server-deployment
 include:
-  - stacks/docker-compose.github.yml
   - stacks/docker-compose.code.yml
   - stacks/docker-compose.syncthing.yml
   - docker-compose.monitoring.yml
