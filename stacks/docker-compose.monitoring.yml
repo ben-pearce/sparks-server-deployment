@@ -11,7 +11,7 @@ services:
     environment:
       EDGE: 1
       EDGE_INSECURE_POLL: 1
-    env_file: ./.secrets/portainer_agent_key
+    env_file: ../.secrets/portainer_agent_key
     restart: unless-stopped
     labels:
       readme.description: Portainer edge agent.
@@ -46,4 +46,4 @@ services:
     privileged: true
 secrets:
   zabbix_agent_psk:
-    file: ./.secrets/zabbix_agent_psk
+    file: ../.secrets/zabbix_agent_psk
