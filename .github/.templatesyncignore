@@ -1,0 +1,5 @@
+README.md
+.env.example
+.github/renovate-default.json
+.github/README.tmpl.md
+.github/renovate-config.json

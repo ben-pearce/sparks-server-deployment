@@ -2,7 +2,7 @@ name: sparks-server-deployment
 include:
   - stacks/docker-compose.code.yml
   - stacks/docker-compose.syncthing.yml
-  - docker-compose.monitoring.yml
+  - stacks/docker-compose.monitoring.yml
 services:
   traefik:
     image: traefik:v3.5.0@sha256:4e7175cfe19be83c6b928cae49dde2f2788fb307189a4dc9550b67acf30c11a5

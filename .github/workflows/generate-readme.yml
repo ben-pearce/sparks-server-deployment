@@ -26,3 +26,4 @@ jobs:
         uses: ben-pearce/server-deployment-generate-readme@7dab54a4e8f9c283c9c273ebcdc4e89b7611fa5d # v1.1.0
         with:
           files: ./**/docker-compose*.yml
+          template: .github/README.tmpl.md

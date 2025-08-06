@@ -1,5 +1,5 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "github>ben-pearce/server-deployment-template:renovate-default"],
+  "extends": ["config:recommended", "github>ben-pearce/server-deployment-template//.github/renovate-default"],
   "repositories": ["ben-pearce/sparks-server-deployment"]
 }
