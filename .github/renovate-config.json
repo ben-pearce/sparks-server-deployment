@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "repositories": ["ben-pearce/server-deployment-template"],
+  "docker-compose": {
+    "managerFilePatterns": ["/(^|/)(?:docker-)?compose[^/]*(\\..+)?\\.ya?ml$/"]
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions", "docker-compose"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "ignoreTests": true,
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}

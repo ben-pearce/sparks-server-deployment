@@ -1,0 +1,49 @@
+name: monitoring
+services:
+  portainer-agent:
+    image: portainer/agent:2.32.0@sha256:dc5a657692bb0916e3187d2b8a2c679bfd5443d432c58f5bd26bd88600d975c2
+    container_name: portainer-agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /:/host:ro
+      - ${DATA_DIR}/portainer-agent:/data
+    environment:
+      EDGE: 1
+      EDGE_INSECURE_POLL: 1
+    env_file: ./.secrets/portainer_agent_key
+    restart: unless-stopped
+    labels:
+      readme.description: Portainer edge agent.
+      readme.links.github: https://github.com/portainer/agent
+  zabbix-agent:
+    image: zabbix/zabbix-agent:7.4.0-alpine@sha256:52cf2ea92e536d9bf64301c4ed9b0d3e49e3c70d35496498bd415b05b464e340
+    container_name: zabbix-agent
+    volumes:
+      - /dev:/dev:ro
+      - /boot:/boot:ro
+      - /etc/passwd:/etc/passwd:ro
+      - /mnt:/mnt:ro
+    secrets:
+      - zabbix_agent_psk
+    environment:
+      ZBX_SERVER_HOST: ${ZBX_SERVER_HOST}
+      ZBX_HOSTNAME: ${ZBX_HOSTNAME}
+      ZBX_STARTAGENTS: 0
+      ZBX_PASSIVE_ALLOW: false
+      ZBX_REFRESHACTIVECHECKS: ${ZBX_REFRESHACTIVECHECKS}
+      ZBX_TLSPSKIDENTITY: ${ZBX_HOSTNAME}
+      ZBX_TLSCONNECT: psk
+      ZBX_TLSACCEPT: psk
+      ZBX_TLSPSKFILE: /run/secrets/zabbix_agent_psk
+    network_mode: host
+    restart: unless-stopped
+    labels:
+      readme.description: Zabbix agent for monitoring.
+      readme.links.docker: https://hub.docker.com/r/zabbix/zabbix-agent
+    user: 2000:2000
+    hostname: ${ZBX_HOSTNAME}
+    privileged: true
+secrets:
+  zabbix_agent_psk:
+    file: ./.secrets/zabbix_agent_psk

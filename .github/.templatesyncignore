@@ -1,0 +1,4 @@
+README.md
+.github/README.tmpl.md
+.github/renovate-config.json
+.env.example

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "docker-compose": {
+    "managerFilePatterns": ["/(^|/)(?:docker-)?compose[^/]*(\\..+)?\\.ya?ml$/"]
+  },
+  "github-actions": {
+    "enabled": false
+  },
+  "packageRules": [
+    {
+      "matchDatasources": "docker",
+      "matchPackageNames": ["lscr.io/linuxserver/**"],
+      "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?(?:-|\\.)?(?<revision>.+)?-ls(?<build>\\d+)$"
+    },
+    {
+      "matchDatasources": "docker",
+      "matchPackageNames": ["portainer/agent", "zabbix/zabbix-agent"],
+      "enabled": false
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/(^|/)(?:docker-)?compose[^/]*(\\..+)?\\.ya?ml$/"
+      ],
+      "matchStrings": [
+        "(?:DOCKER_MODS(?:.|\\n)+?|\\|\\n*\\s*)(?<depName>.+?):(?<currentValue>[a-zA-Z-_,0-9\\.]+)(:?@(?<currentDigest>sha256:[0-9a-f]+))?"
+      ],
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "regex:^(?:(?<compatibility>[a-zA-Z-_,0-9]+)(-|$))?(?:(?<build>\\d+\\.\\d+\\.\\d+)-)?(?:v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+))?$"
+    }
+  ]
+}
