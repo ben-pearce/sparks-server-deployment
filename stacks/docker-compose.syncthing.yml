@@ -1,7 +1,7 @@
 name: syncthing
 services:
   syncthing:
-    image: lscr.io/linuxserver/syncthing:v1.30.0-ls188@sha256:a2787b40b89a04b33cea95e7304bb2efc0a126c2676d9e6291b59cfb9ced4b88
+    image: lscr.io/linuxserver/syncthing:v2.0.1-ls190@sha256:d639fa83a2809c751a0abe83fa86745f846092cb2e39fbaecdd02a1c01922d97
     container_name: syncthing
     volumes:
       - ${DATA_DIR}/syncthing:/config
