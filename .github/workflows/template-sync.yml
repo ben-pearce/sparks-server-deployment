@@ -14,15 +14,15 @@ jobs:
 
     steps:
       - name: 🛠️ Checkout repository
-        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
         with:
           persist-credentials: false
 
       - name: 🔄 Sync Template Repository
         uses: AndreasAugustin/actions-template-sync@8ec19a5f2721ffb81ff809aa340ddf75e6a85ea6 # v2.5.2
         with:
-          source_gh_token: ${{ secrets.RENOVATE_TOKEN }}
-          target_gh_token: ${{ secrets.RENOVATE_TOKEN }}
+          source_gh_token: ${{ secrets.REPOSITORY_TOKEN }}
+          target_gh_token: ${{ secrets.REPOSITORY_TOKEN }}
           git_user_name: github-actions[bot]
           git_user_email: github-actions[bot]@users.noreply.github.com
           source_repo_path: ben-pearce/server-deployment-template
