@@ -8,7 +8,7 @@ This repository contains my Docker Compose files and configuration files for ser
 |---|---|---|---|
 | [traefik](./docker-compose.yml#L9)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
-| [nginx-proxy-manager](./stacks/docker-compose.code.yml#L36)  | Expose your services easily and securely |  |  |
+| [nginx-proxy-manager](./stacks/docker-compose.code.yml#L44)  | Expose your services easily and securely |  |  |
 | [portainer-agent](./stacks/docker-compose.monitoring.yml#L5)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
 | [zabbix-agent](./stacks/docker-compose.monitoring.yml#L21)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L5)  | Free and open source peer-to-peer file synchronization | `0.0.0.0:21027:21027/udp`, `0.0.0.0:22000:22000/tcp`, `0.0.0.0:22000:22000/udp` | [Website](https://syncthing.net/) |
