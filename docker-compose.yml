@@ -1,5 +1,6 @@
 name: sparks-server-deployment
 include:
+  - stacks/docker-compose.authentik.yml
   - stacks/docker-compose.code.yml
   - stacks/docker-compose.syncthing.yml
   - stacks/docker-compose.monitoring.yml

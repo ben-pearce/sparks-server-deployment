@@ -46,7 +46,7 @@ services:
       readme.links.website: https://nginxproxymanager.com/
       traefik.enable: true
       traefik.http.routers.nginx-proxy-manager.entrypoints: https
-      traefik.http.routers.nginx-proxy-manager.middlewares: authelia
+      traefik.http.routers.nginx-proxy-manager.middlewares: authentik
       traefik.http.routers.nginx-proxy-manager.rule: Host(`dev.${HOST}`)
       traefik.http.routers.nginx-proxy-manager.tls.certresolver: resolver
       traefik.http.routers.nginx-proxy-manager.service: nginx-proxy-manager
