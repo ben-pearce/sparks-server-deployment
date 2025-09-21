@@ -1,5 +1,6 @@
 name: sparks-server-deployment
 include:
+  - stacks/docker-compose.authentik.yml
   - stacks/docker-compose.code.yml
   - stacks/docker-compose.syncthing.yml
   - stacks/docker-compose.monitoring.yml
@@ -44,9 +45,6 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
-      traefik.http.middlewares.authelia.forwardauth.address: https://${AUTHELIA_HOST}/api/verify?rd=https://${AUTHELIA_HOST}/
-      traefik.http.middlewares.authelia.forwardauth.authresponseheaders: Remote-User, Remote-Groups, Remote-Email
-      traefik.http.middlewares.authelia.forwardauth.trustforwardheader: true
       traefik.http.routers.api.entrypoints: https
       traefik.http.routers.api.rule: Host(`traefik.${HOST}`)
       traefik.http.routers.api.tls.certresolver: resolver

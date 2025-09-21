@@ -28,7 +28,7 @@ services:
       readme.links.github: https://github.com/coder/code-server
       traefik.enable: true
       traefik.http.routers.code-server.entrypoints: https
-      traefik.http.routers.code-server.middlewares: authelia
+      traefik.http.routers.code-server.middlewares: authentik
       traefik.http.routers.code-server.rule: Host(`code.${HOST}`)
       traefik.http.routers.code-server.tls.certresolver: resolver
       traefik.http.services.code-server.loadbalancer.server.port: 8443
@@ -46,7 +46,7 @@ services:
       readme.links.website: https://nginxproxymanager.com/
       traefik.enable: true
       traefik.http.routers.nginx-proxy-manager.entrypoints: https
-      traefik.http.routers.nginx-proxy-manager.middlewares: authelia
+      traefik.http.routers.nginx-proxy-manager.middlewares: authentik
       traefik.http.routers.nginx-proxy-manager.rule: Host(`dev.${HOST}`)
       traefik.http.routers.nginx-proxy-manager.tls.certresolver: resolver
       traefik.http.routers.nginx-proxy-manager.service: nginx-proxy-manager
