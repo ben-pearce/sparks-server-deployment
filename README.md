@@ -6,7 +6,8 @@ This repository contains my Docker Compose files and configuration files for ser
 
 | **Name** | **Description** | **Ports** | **Links** |
 |---|---|---|---|
-| [traefik](./docker-compose.yml#L9)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
+| [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
+| [authentik-proxy](./stacks/docker-compose.authentik.yml#L5)  |  |  |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser |  | [GitHub](https://github.com/coder/code-server) |
 | [nginx-proxy-manager](./stacks/docker-compose.code.yml#L39)  | Expose your services easily and securely |  |  |
 | [portainer-agent](./stacks/docker-compose.monitoring.yml#L5)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
@@ -34,7 +35,7 @@ The `.env` file stores environment variables to make starting the containers eas
 | `CONFIG_DIR` | Location of config storage on host. | `config` |
 | `DATA_DIR` | Location of data storage on host. | `data` |
 | `ADMIN_EMAIL` | Administrative email address. | `somebody@example.com` |
-| `AUTHELIA_HOST` | Remote Authelia host. | `login.example.com` |
+| `AUTHENTIK_HOST` | Remote Authentik host. | `authentik.example.com` |
 | `HOST_IP` | IP Address of the host. | `172.0.0.1` |
 | `NFS_HOST` | Host of NFS shares. | `nfs.example.com` |
 | `ZBX_HOSTNAME` | Zabbix server hostname. | `zabbix-server` |
