@@ -17,7 +17,7 @@ services:
       readme.description: Portainer edge agent.
       readme.links.github: https://github.com/portainer/agent
   zabbix-agent:
-    image: zabbix/zabbix-agent:7.4.2-alpine@sha256:7316cae2a1730689f07e9fc85b5b5fff9dc1da3e6732df54a19424f8c5bd282d
+    image: zabbix/zabbix-agent:7.4.3-alpine@sha256:4d49956f58d9bac13b5d53f930e25c63909e7390fe51be3a70a99540cf3fcc5e
     container_name: zabbix-agent
     volumes:
       - /dev:/dev:ro
