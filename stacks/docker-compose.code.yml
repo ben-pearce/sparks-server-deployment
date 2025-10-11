@@ -1,7 +1,7 @@
 name: code
 services:
   code-server:
-    image: lscr.io/linuxserver/code-server:4.104.2-ls298@sha256:f0f4cc06a8c642e61299fe57b01fe2d5ded3934e923aba7456770e70a3c8cf97
+    image: lscr.io/linuxserver/code-server:4.104.3-ls300@sha256:eb38bbc3d8de828895cae2be32ab9c7f8bcfe87952a9f8e2ad33ce9e99e78a6a
     container_name: code-server
     volumes:
       - ${CONFIG_DIR}/code:/config
