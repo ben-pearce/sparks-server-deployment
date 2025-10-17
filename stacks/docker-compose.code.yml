@@ -4,7 +4,7 @@ services:
     image: lscr.io/linuxserver/code-server:4.104.3-ls300@sha256:eb38bbc3d8de828895cae2be32ab9c7f8bcfe87952a9f8e2ad33ce9e99e78a6a
     container_name: code-server
     volumes:
-      - ${CONFIG_DIR}/code:/config
+      - ${DATA_DIR}/code:/config
       - workspaces:/workspaces
       - /var/lib/code-docker:/var/lib/docker
     secrets:
