@@ -25,6 +25,9 @@ jobs:
           port: ${{ secrets.DEPLOY_SSH_PORT }}
           script: | 
             cd /home/${{ secrets.DEPLOY_SSH_USERNAME }}/${{ github.event.repository.name }}
-            git pull
+            git fetch --prune origin
+            git reset --hard origin/${{ github.ref_name }}
+            git submodule sync --recursive
+            git submodule update --init --recursive --force
             sudo docker compose up -d --remove-orphans
             sudo docker image prune -af
