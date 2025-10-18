@@ -15,7 +15,7 @@ services:
       - TZ
       - DEFAULT_WORKSPACE=/workspaces
       - >-
-        DOCKER_MODS=linuxserver/mods:code-server-python3@sha256:07284400ff0ea6e3721341de91f3edadf61415e5d7ef59e8a87fc3f2bb0c542c| linuxserver/mods:universal-docker-in-docker-28.5.0-2.40.0@sha256:2fba23a2645f485fb14e91861e459e59e7ea91b1d9934e2281642f553b9a9963| linuxserver/mods:code-server-shellcheck@sha256:9ce2181a76e274da9bf256661df679cfbb2c220b924a129ce2d65949666dda6f| linuxserver/mods:code-server-nodejs@sha256:7c5f564f56b038e2d70ac21840ea5d83abe3c0400aee467b7aad9c20bc8f7c95| linuxserver/mods:code-server-php-cli@sha256:5c417f8abce4c46f64cbe84f8c34e4ad7431dfb96ff376b926dd6694ad771c11| ghcr.io/ben-pearce/code-server-custom:v0.0.2@sha256:61b61e2522f551eff9f8488907f6cbe6236b597b50ef9aa810f5270c4789f006
+        DOCKER_MODS=linuxserver/mods:code-server-python3@sha256:07284400ff0ea6e3721341de91f3edadf61415e5d7ef59e8a87fc3f2bb0c542c| linuxserver/mods:universal-docker-in-docker-28.5.0-2.40.0@sha256:2fba23a2645f485fb14e91861e459e59e7ea91b1d9934e2281642f553b9a9963| linuxserver/mods:code-server-shellcheck@sha256:9ce2181a76e274da9bf256661df679cfbb2c220b924a129ce2d65949666dda6f| linuxserver/mods:code-server-nodejs@sha256:7c5f564f56b038e2d70ac21840ea5d83abe3c0400aee467b7aad9c20bc8f7c95| linuxserver/mods:code-server-php-cli@sha256:5c417f8abce4c46f64cbe84f8c34e4ad7431dfb96ff376b926dd6694ad771c11| ghcr.io/ben-pearce/code-server-custom:v0.0.3@sha256:f363122b19f5de6c729ecc912ebd16e2f9b4f59a4fd4d5ec0dd532ee7ab874aa
       - NODEJS_MOD_VERSION=20
       - ENABLE_COMPOSER=yes
       - PHP_VERSION=8.3
