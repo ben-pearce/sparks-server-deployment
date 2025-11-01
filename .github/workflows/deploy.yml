@@ -9,12 +9,24 @@ jobs:
     environment: production
 
     steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+
       - name: 🔐 Create WireGuard overlay
         run: |
           sudo apt install resolvconf wireguard
           echo "${{ secrets.WIREGUARD_CONFIG }}" > wg0.conf
           sudo chmod 600 wg0.conf
           sudo wg-quick up ./wg0.conf
+      
+      - name: ⚙️ Pre-deploy
+        if: hashFiles('.github/workflows/pre-deploy/action.yml') != ''
+        uses: ./.github/workflows/pre-deploy
+        with:
+          ssh_host: ${{ secrets.DEPLOY_SSH_HOST }}
+          ssh_user: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          ssh_port: ${{ secrets.DEPLOY_SSH_PORT }}
 
       - name: 🚀 Deploy to Remote Server
         uses: appleboy/ssh-action@2ead5e36573f08b82fbfce1504f1a4b05a647c6f # v1.2.2
@@ -27,7 +39,14 @@ jobs:
             cd /home/${{ secrets.DEPLOY_SSH_USERNAME }}/${{ github.event.repository.name }}
             git fetch --prune origin
             git reset --hard origin/${{ github.ref_name }}
-            git submodule sync --recursive
-            git submodule update --init --recursive --force
             sudo docker compose up -d --remove-orphans
             sudo docker image prune -af
+
+      - name: 🧹 Post-deploy
+        if: hashFiles('.github/workflows/post-deploy/action.yml') != ''
+        uses: ./.github/workflows/post-deploy
+        with:
+          ssh_host: ${{ secrets.DEPLOY_SSH_HOST }}
+          ssh_user: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          ssh_port: ${{ secrets.DEPLOY_SSH_PORT }}
