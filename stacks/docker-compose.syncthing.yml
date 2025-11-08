@@ -6,6 +6,7 @@ services:
     volumes:
       - ${DATA_DIR}/syncthing:/config
       - ${DATA_DIR}/code:/code
+    hostname: ${HOST}
     environment:
       - PUID
       - PGID
