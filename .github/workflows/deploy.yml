@@ -29,7 +29,7 @@ jobs:
           ssh_port: ${{ secrets.DEPLOY_SSH_PORT }}
 
       - name: 🚀 Deploy to Remote Server
-        uses: appleboy/ssh-action@2ead5e36573f08b82fbfce1504f1a4b05a647c6f # v1.2.2
+        uses: appleboy/ssh-action@91f3272fc5907f4699dcf59761eb622a07342f5a # v1.2.3
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
           username: ${{ secrets.DEPLOY_SSH_USERNAME }}
@@ -39,8 +39,8 @@ jobs:
             cd /home/${{ secrets.DEPLOY_SSH_USERNAME }}/${{ github.event.repository.name }}
             git fetch --prune origin
             git reset --hard origin/${{ github.ref_name }}
-            sudo docker compose up -d --remove-orphans
-            sudo docker image prune -af
+            docker compose up -d --remove-orphans
+            docker image prune -af
 
       - name: 🧹 Post-deploy
         if: hashFiles('.github/workflows/post-deploy/action.yml') != ''
