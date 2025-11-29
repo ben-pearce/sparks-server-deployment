@@ -62,8 +62,11 @@ jobs:
     needs: [validate-deps-only]
 
     if: |
-      github.event_name == 'workflow_dispatch' ||
-      needs.validate-deps-only.outputs.not_allowed == 'false'
+      always() &&
+      (
+        github.event_name == 'workflow_dispatch' ||
+        needs.validate-deps-only.outputs.not_allowed == 'false'
+      )
 
     steps:
       - name: 📥 Checkout Repository
