@@ -3,6 +3,8 @@ name: 🚀 Remote Server Deployment
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
 
 jobs:
   validate-deps-only:
@@ -84,7 +86,7 @@ jobs:
         uses: ./.github/workflows/pre-deploy
         with:
           ssh_host: ${{ secrets.DEPLOY_SSH_HOST }}
-          ssh_user: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          ssh_user: ${{ vars.DEPLOY_SSH_USERNAME }}
           ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
           ssh_port: ${{ secrets.DEPLOY_SSH_PORT }}
 
@@ -92,21 +94,16 @@ jobs:
         uses: appleboy/ssh-action@91f3272fc5907f4699dcf59761eb622a07342f5a # v1.2.3
         with:
           host: ${{ secrets.DEPLOY_SSH_HOST }}
-          username: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          username: ${{ vars.DEPLOY_SSH_USERNAME }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           port: ${{ secrets.DEPLOY_SSH_PORT }}
-          script: | 
-            cd /home/${{ secrets.DEPLOY_SSH_USERNAME }}/${{ github.event.repository.name }}
-            git fetch --prune origin
-            git reset --hard origin/${{ github.ref_name }}
-            docker compose up -d --remove-orphans
-            docker image prune -af
+          script: ability compose-stack-update ${{ github.ref_name }}
 
       - name: 🧹 Post-deploy
         if: hashFiles('.github/workflows/post-deploy/action.yml') != ''
         uses: ./.github/workflows/post-deploy
         with:
           ssh_host: ${{ secrets.DEPLOY_SSH_HOST }}
-          ssh_user: ${{ secrets.DEPLOY_SSH_USERNAME }}
+          ssh_user: ${{ vars.DEPLOY_SSH_USERNAME }}
           ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
           ssh_port: ${{ secrets.DEPLOY_SSH_PORT }}
