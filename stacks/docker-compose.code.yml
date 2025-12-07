@@ -22,6 +22,8 @@ services:
       - PHP_EXTENSIONS=simplexml|gd|zip|xml|curl
       - MODS_DIND_PERSISTENCE=/var/lib/docker
       - FILE__SUDO_PASSWORD_HASH=/run/secrets/code_sudo_password
+    ports:
+      - '0.0.0.0:10000:10000/tcp'
     restart: unless-stopped
     labels:
       readme.description: VS Code in the browser
