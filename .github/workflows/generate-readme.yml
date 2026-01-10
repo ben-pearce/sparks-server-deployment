@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: 📥 Checkout Repository
-        uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
           
       - name: 📝 Generate README
         uses: ben-pearce/server-deployment-generate-readme@3241cc05d589d870d55e8a0741a09b1f210f6e77 # v1.2.3
