@@ -1,7 +1,7 @@
 name: authentik
 services:
   authentik-proxy:
-    image: ghcr.io/goauthentik/proxy:2025.10.2@sha256:8dae597dad1a323852eddbb820e92e4db0f6cd67dc345b12aeb8ae79b1b5b39d
+    image: ghcr.io/goauthentik/proxy:2025.12.1@sha256:05d08f10759ece45acf498bd09ce99f3bb8a36cd69aaac10d601cbc35c4f47aa
     container_name: authentik-proxy
     secrets:
       - authentik_token
