@@ -1,7 +1,7 @@
 name: monitoring
 services:
   portainer-agent:
-    image: portainer/agent:2.38.0@sha256:c17caf98b3c10b9d32c2d4c6a5ee0b3cc282b546c922848ba05f5e0dc7533a38
+    image: portainer/agent:2.38.1@sha256:088d6a4fa5ff257793ff78cdf93483186d7e7247b69335c3d80c9b2c5bf380f0
     container_name: portainer-agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -17,7 +17,7 @@ services:
       readme.description: Portainer edge agent.
       readme.links.github: https://github.com/portainer/agent
   zabbix-agent:
-    image: zabbix/zabbix-agent:7.4.6-alpine@sha256:3d08af164fcd30ec4e4695faecd3f0dd43bdcd39214d74dbf5a6be916b718465
+    image: zabbix/zabbix-agent:7.4.7-alpine@sha256:1107b49cc31ed73e7c9f1c932e991ec799c9210a5291c797b421169e2601d457
     container_name: zabbix-agent
     volumes:
       - /dev:/dev:ro
