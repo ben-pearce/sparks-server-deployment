@@ -38,7 +38,7 @@ services:
       - '--entrypoints.https.http.tls.domains[1].sans=*.${HOST}'
       - '--certificatesresolvers.resolver.acme.dnschallenge=true'
       - '--certificatesresolvers.resolver.acme.dnschallenge.provider=cloudflare'
-      - '--certificatesresolvers.resolver.acme.email=${ADMIN_MAIL}'
+      - '--certificatesresolvers.resolver.acme.email=${ADMIN_EMAIL}'
       - '--certificatesresolvers.resolver.acme.storage=/letsencrypt/acme.json'
       - '--certificatesresolvers.resolver.acme.dnschallenge.resolvers=1.1.1.1,1.0.0.1'
       - '--serversTransport.insecureSkipVerify=true'
