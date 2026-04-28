@@ -18,11 +18,22 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: 🤫 Creating GitHub App Token
+        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        id: app-token
+        with:
+          client-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            server-deployment-template
+            ${{ github.event.repository.name }}
+
       - name: 🔄 Sync Template Repository
         uses: AndreasAugustin/actions-template-sync@8ec19a5f2721ffb81ff809aa340ddf75e6a85ea6 # v2.5.2
         with:
-          source_gh_token: ${{ secrets.REPOSITORY_TOKEN }}
-          target_gh_token: ${{ secrets.REPOSITORY_TOKEN }}
+          source_gh_token: ${{ steps.app-token.outputs.token }}
+          target_gh_token: ${{ steps.app-token.outputs.token }}
           git_user_name: github-actions[bot]
           git_user_email: github-actions[bot]@users.noreply.github.com
-          source_repo_path: ben-pearce/server-deployment-template
+          source_repo_path: ${{ github.repository_owner }}/server-deployment-template
