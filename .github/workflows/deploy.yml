@@ -75,9 +75,12 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: 🔐 Create Wireguard overlay
+        if: env.WIREGUARD_CONFIG != ''
+        env:
+          WIREGUARD_CONFIG: ${{ secrets.WIREGUARD_CONFIG }}
         run: |
           sudo apt install resolvconf wireguard
-          echo "${{ secrets.WIREGUARD_CONFIG }}" > wg0.conf
+          echo "$WIREGUARD_CONFIG" > wg0.conf
           sudo chmod 600 wg0.conf
           sudo wg-quick up ./wg0.conf
       
