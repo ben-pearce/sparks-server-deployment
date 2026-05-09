@@ -6,7 +6,7 @@ include:
   - stacks/docker-compose.monitoring.yml
 services:
   traefik:
-    image: traefik:v3.6.14@sha256:4cda3393930dceff030e144b46260e96e1337c9cfaa4fed81c90cb8f4d498f57
+    image: traefik:v3.7.0@sha256:eb328e2c806c53aafbbace6c451fa54d268961261a85452fcf0fb752a30c17be
     container_name: traefik
     volumes:
       - ${DATA_DIR}/letsencrypt:/letsencrypt
