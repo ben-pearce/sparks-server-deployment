@@ -19,7 +19,8 @@ services:
       CF_ZONE_API_TOKEN_FILE: /run/secrets/cloudflare_zone_api_token
     ports:
       - '0.0.0.0:80:80'
-      - '0.0.0.0:443:443'
+      - '0.0.0.0:443:443/tcp'
+      - '0.0.0.0:443:443/udp'
     command:
       - '--global.sendAnonymousUsage=false'
       - '--api.insecure=true'
@@ -30,6 +31,7 @@ services:
       - '--entrypoints.http.http.redirections.entrypoint.to=https'
       - '--entrypoints.http.http.redirections.entrypoint.scheme=https'
       - '--entrypoints.https.address=:443'
+      - '--entrypoints.https.http3'
       - '--entrypoints.https.http.tls=true'
       - '--entrypoints.https.http.tls.certResolver=letsencrypt'
       - '--entrypoints.https.http.tls.domains[0].main=dev.${HOST}'
