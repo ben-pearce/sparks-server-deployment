@@ -6,7 +6,7 @@ This repository contains my Docker Compose files and configuration files for ser
 
 | **Name** | **Description** | **Ports** | **Links** |
 |---|---|---|---|
-| [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443` |  |
+| [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443/tcp`, `0.0.0.0:443:443/udp` |  |
 | [authentik-proxy](./stacks/docker-compose.authentik.yml#L5)  |  |  |  |
 | [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser | `0.0.0.0:10000:10000/tcp` | [GitHub](https://github.com/coder/code-server) |
 | [nginx-proxy-manager](./stacks/docker-compose.code.yml#L41)  | Expose your services easily and securely |  |  |
