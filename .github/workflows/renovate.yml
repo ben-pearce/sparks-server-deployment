@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 
       - name: 🤫 Creating GitHub App Token
-        uses: actions/create-github-app-token@1b10c78c7865c340bc4f6099eb2f838309f1e8c3 # v3.1.1
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         id: app-token
         with:
           client-id: ${{ secrets.APP_CLIENT_ID }}
@@ -24,11 +24,13 @@ jobs:
             ${{ github.event.repository.name }}
 
       - name: 🤖 Run Renovate
-        uses: renovatebot/github-action@f66d8679fcfcfa051abde6e7a623007173bf5164 # v46.1.12
+        uses: renovatebot/github-action@693b9ef15eec82123529a37c782242f091365961 # v46.1.14
         with:
           configurationFile: .github/renovate-config.json
           token: ${{ steps.app-token.outputs.token }}
         env:
+          RENOVATE_AUTODISCOVER: 'true'
+          RENOVATE_AUTODISCOVER_FILTER: 'server-deployment-template,${{ github.repository }}'
           RENOVATE_HOST_RULES: ${{ secrets.RENOVATE_HOST_RULES }}
           RENOVATE_PR_HOURLY_LIMIT: 20
           RENOVATE_PR_CONCURRENT_LIMIT: 20
