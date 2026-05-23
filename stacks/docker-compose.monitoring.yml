@@ -1,7 +1,7 @@
 name: monitoring
 services:
   portainer-agent:
-    image: portainer/agent:2.40.0@sha256:956f99ebb48840b7cbe502b340be1fd2bb334b2ed357663cb274d7f9f8a75911
+    image: portainer/agent:2.42.0@sha256:d67c13e489907f6ccf63ba22562910cdd143f788671038f1b10728f8bb7f9385
     container_name: portainer-agent
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
