@@ -6,7 +6,7 @@ services:
     volumes:
       - ${DATA_DIR}/code:/config
       - workspaces:/workspaces
-      - /var/lib/code-docker:/var/lib/docker
+      - docker:/var/lib/docker
     secrets:
       - code_sudo_password
     environment:
@@ -66,6 +66,8 @@ volumes:
       type: 'nfs'
       o: 'addr=${NFS_HOST},nolock,soft,nfsvers=4'
       device: ':/mnt/turbo/workspaces'
+  docker:
+    name: docker
 secrets:
   code_sudo_password:
     file: ../.secrets/code_sudo_password
