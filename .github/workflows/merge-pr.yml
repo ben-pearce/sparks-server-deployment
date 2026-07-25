@@ -1,0 +1,45 @@
+name: 🤖 Merge Open PRs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  merge-prs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: 🤫 Creating GitHub App Token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: app-token
+        with:
+          client-id: ${{ secrets.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: |
+            server-deployment-template
+            ${{ github.event.repository.name }}
+
+      - name: 🔀 Merge Open PRs
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          prs=$(gh pr list \
+            --author "ben-pearce-renovate-homelab[bot]" \
+            --state open \
+            --json number,title,headRefName,mergeable,reviews \
+            --jq '.[] | select(.mergeable == "MERGEABLE" or .mergeable == "UNKNOWN") | .number')
+
+          if [ -z "$prs" ]; then
+            echo "No mergeable PRs found."
+            exit 0
+          fi
+
+          echo "$prs" | while read -r pr; do
+            echo "Merging PR #$pr..."
+            gh pr merge "$pr" \
+              --merge \
+              --auto \
+              || echo "Failed to merge PR #$pr"
+          done
