@@ -9,6 +9,8 @@ jobs:
     steps:
       - name: 📥 Checkout Repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
 
       - name: 🤫 Creating GitHub App Token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
@@ -25,21 +27,45 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          git fetch origin "${{ github.event.repository.default_branch }}"
+          git checkout "${{ github.event.repository.default_branch }}"
+          git reset --hard "origin/${{ github.event.repository.default_branch }}"
+
           prs=$(gh pr list \
             --author "ben-pearce-renovate-homelab[bot]" \
+            --search "status:success" \
             --state open \
             --json number,title,headRefName,mergeable,reviews \
-            --jq '.[] | select(.mergeable == "MERGEABLE" or .mergeable == "UNKNOWN") | .number')
+            --jq '.[] | select(.mergeable == "MERGEABLE") | @base64')
 
           if [ -z "$prs" ]; then
             echo "No mergeable PRs found."
             exit 0
           fi
 
-          echo "$prs" | while read -r pr; do
-            echo "Merging PR #$pr..."
-            gh pr merge "$pr" \
-              --merge \
-              --auto \
-              || echo "Failed to merge PR #$pr"
-          done
+          merged=0
+
+          while read -r pr; do
+            json=$(echo "$pr" | base64 -d)
+
+            number=$(echo "$json" | jq -r '.number')
+            branch=$(echo "$json" | jq -r '.headRefName')
+
+            echo "Merging PR #$number ($branch)..."
+
+            git fetch origin "$branch:$branch"
+
+            if git merge --no-ff --no-edit "$branch"; then
+              merged=1
+            else
+              echo "Merge conflict in PR #$number, aborting merge."
+              git merge --abort || true
+            fi
+          done <<< "$prs"
+
+          if [ "$merged" = "1" ]; then
+            git push origin "${{ github.event.repository.default_branch }}"
+          fi
