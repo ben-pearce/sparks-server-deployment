@@ -38,8 +38,30 @@ jobs:
             --author "ben-pearce-renovate-homelab[bot]" \
             --search "status:success" \
             --state open \
-            --json number,title,headRefName,mergeable,reviews \
-            --jq '.[] | select(.mergeable == "MERGEABLE") | @base64')
+            --json number,title,headRefName,mergeable,createdAt,statusCheckRollup \
+            --jq '
+              .[]
+              | select(.mergeable == "MERGEABLE")
+              | select(
+                  (
+                    any(
+                      .statusCheckRollup[];
+                      .context == "renovate/stability-days"
+                      and (.state == "SUCCESS" or .conclusion == "SUCCESS")
+                    )
+                  )
+                  or
+                  (
+                    ((now - (.createdAt | fromdateiso8601)) / 86400) >= 3
+                  )
+                )
+              | @base64
+            ')
+
+          echo "PRs selected:"
+          echo "$prs" | while read -r pr; do
+            echo "$pr" | base64 -d | jq '{number, title, headRefName}'
+          done
 
           if [ -z "$prs" ]; then
             echo "No mergeable PRs found."
