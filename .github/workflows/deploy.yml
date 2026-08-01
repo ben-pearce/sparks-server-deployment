@@ -2,6 +2,11 @@ name: 🚀 Remote Server Deployment
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows:
+      - 🤖 Merge Open PRs
+    types:
+      - completed
   push:
     branches:
       - main
@@ -67,6 +72,7 @@ jobs:
       always() &&
       (
         github.event_name == 'workflow_dispatch' ||
+        github.event_name == 'workflow_run' ||
         needs.validate-deps-only.outputs.not_allowed == 'false'
       )
 
