@@ -36,7 +36,6 @@ jobs:
 
           prs=$(gh pr list \
             --author "ben-pearce-renovate-homelab[bot]" \
-            --search "status:success" \
             --state open \
             --json number,title,headRefName,mergeable,createdAt,statusCheckRollup \
             --jq '
