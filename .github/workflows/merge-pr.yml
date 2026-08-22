@@ -26,6 +26,7 @@ jobs:
       - name: 🔀 Merge Open PRs
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          AUTO_MERGE_PR_MIN_DAYS: ${{ vars.AUTO_MERGE_PR_MIN_DAYS || '3' }}
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
@@ -49,9 +50,9 @@ jobs:
                       and (.state == "SUCCESS" or .conclusion == "SUCCESS")
                     )
                   )
-                  or
+                  and
                   (
-                    ((now - (.createdAt | fromdateiso8601)) / 86400) >= 3
+                    ((now - (.createdAt | fromdateiso8601)) / 86400) >= '"${AUTO_MERGE_PR_MIN_DAYS}"'
                   )
                 )
               | @base64
