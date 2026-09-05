@@ -7,9 +7,9 @@ services:
       - ${DATA_DIR}/syncthing:/config
       - ${DATA_DIR}/code:/code
     environment:
-      - PUID
-      - PGID
-      - TZ
+      PUID: ${PUID}
+      PGID: ${PGID}
+      TZ: ${TZ}
     ports:
       - '0.0.0.0:21027:21027/udp'
       - '0.0.0.0:22000:22000/tcp'
