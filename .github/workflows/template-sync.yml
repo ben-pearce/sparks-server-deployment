@@ -2,7 +2,7 @@ name: 🔄 Template Repository Sync
 
 on:
   schedule:
-  - cron: "30 0 * * 6" # Every Saturday at 00:30 UTC
+  - cron: "30 0 * * 1" # Every Monday at 00:30 UTC
   workflow_dispatch:
 
 jobs:
