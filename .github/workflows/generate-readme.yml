@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
           
       - name: 📝 Generate README
-        uses: ben-pearce/server-deployment-generate-readme@5a33252605211101d9f11c34df87816e4336ccd6 # v1.2.10
+        uses: ben-pearce/server-deployment-generate-readme@a0d39d3df44c2550ec4b947dd2a977a3e030e7c2 # v1.3.0
         with:
           files: ./**/docker-compose*.yml
           template: .github/README.tmpl.md
