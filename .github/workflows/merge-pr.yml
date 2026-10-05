@@ -38,10 +38,14 @@ jobs:
               | select(.mergeable == "MERGEABLE")
               | select(
                   (
-                    any(
-                      .statusCheckRollup[];
-                      .context == "renovate/stability-days"
-                      and (.state == "SUCCESS" or .conclusion == "SUCCESS")
+                    (
+                      (any(.statusCheckRollup[]; .context == "renovate/stability-days") | not)
+                      or
+                      any(
+                        .statusCheckRollup[];
+                        .context == "renovate/stability-days"
+                        and (.state == "SUCCESS" or .conclusion == "SUCCESS")
+                      )
                     )
                   )
                   and
