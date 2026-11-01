@@ -8,8 +8,8 @@ This repository contains my Docker Compose files and configuration files for ser
 |---|---|---|---|
 | [traefik](./docker-compose.yml#L10)  |  | `0.0.0.0:80:80`, `0.0.0.0:443:443/tcp`, `0.0.0.0:443:443/udp` |  |
 | [authentik-proxy](./stacks/docker-compose.authentik.yml#L5)  |  |  |  |
-| [code-server](./stacks/docker-compose.code.yml#L5)  | VS Code in the browser | `0.0.0.0:10000:10000/tcp` | [GitHub](https://github.com/coder/code-server) |
-| [nginx-proxy-manager](./stacks/docker-compose.code.yml#L40)  | Expose your services easily and securely |  |  |
+| [coder](./stacks/docker-compose.coder.yml#L5)  | Secure environments for developers and their agents |  | [GitHub](https://github.com/coder/coder) |
+| [coder-postgres](./stacks/docker-compose.coder.yml#L44)  |  |  |  |
 | [portainer-agent](./stacks/docker-compose.monitoring.yml#L5)  | Portainer edge agent. |  | [GitHub](https://github.com/portainer/agent) |
 | [zabbix-agent](./stacks/docker-compose.monitoring.yml#L21)  | Zabbix agent for monitoring. |  | [Docker Hub](https://hub.docker.com/r/zabbix/zabbix-agent) |
 | [syncthing](./stacks/docker-compose.syncthing.yml#L5)  | Free and open source peer-to-peer file synchronization | `0.0.0.0:21027:21027/udp`, `0.0.0.0:22000:22000/tcp`, `0.0.0.0:22000:22000/udp` | [Website](https://syncthing.net/) |
@@ -26,7 +26,7 @@ The `.env` file stores environment variables to make starting the containers eas
 | **Variable** | **Description** | **Example** |
 |---|---|---|
 | `HOST` | The main host for web-based services. | `sparks` |
-| `NPM_HOST_PATTERN` | Regex pattern to match dev environment hosts. | `"^[a-z0-9-]+\.dev\.sparks$"` |
+| `CODER_HOST_PATTERN` | Regex pattern to match dev environment hosts. | `"^[a-z0-9-]+\.dev\.sparks$"` |
 | `SMTP_HOST` | SMTP mail server host. | `mail.example.com` |
 | `SMTP_USER` | SMTP username. | `postmaster@example.com` |
 | `TZ` | Timezone for all containers. | `Europe/London` |
