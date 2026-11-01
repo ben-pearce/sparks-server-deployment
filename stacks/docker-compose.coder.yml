@@ -11,7 +11,7 @@ services:
       - ${DATA_DIR}/coder:/home/coder
     environment:
       CODER_HTTP_ADDRESS: 0.0.0.0:7080
-      CODER_ACCESS_URL: "https://coder.${HOST}"
+      CODER_ACCESS_URL: 'https://coder.${HOST}'
       CODER_OIDC_IGNORE_EMAIL_VERIFIED: true
       CODER_DISABLE_PASSWORD_AUTH: true
       CODER_OIDC_SCOPES: openid,profile,email,offline_access
