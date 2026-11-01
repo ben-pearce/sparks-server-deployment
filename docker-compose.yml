@@ -1,7 +1,7 @@
 name: sparks-server-deployment
 include:
   - stacks/docker-compose.authentik.yml
-  - stacks/docker-compose.code.yml
+  - stacks/docker-compose.coder.yml
   - stacks/docker-compose.syncthing.yml
   - stacks/docker-compose.monitoring.yml
 services:
@@ -34,8 +34,8 @@ services:
       - '--entrypoints.https.http3'
       - '--entrypoints.https.http.tls=true'
       - '--entrypoints.https.http.tls.certResolver=letsencrypt'
-      - '--entrypoints.https.http.tls.domains[0].main=dev.${HOST}'
-      - '--entrypoints.https.http.tls.domains[0].sans=*.dev.${HOST}'
+      - '--entrypoints.https.http.tls.domains[0].main=coder.${HOST}'
+      - '--entrypoints.https.http.tls.domains[0].sans=*.coder.${HOST}'
       - '--entrypoints.https.http.tls.domains[1].main=${HOST}'
       - '--entrypoints.https.http.tls.domains[1].sans=*.${HOST}'
       - '--certificatesresolvers.resolver.acme.dnschallenge=true'
