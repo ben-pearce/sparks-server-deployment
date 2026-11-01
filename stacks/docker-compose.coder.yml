@@ -3,11 +3,12 @@ services:
   coder:
     image: ghcr.io/coder/coder:2.34.14@sha256:a31f166c43d2dc8d68c49e345915f605999fe40791d40b67556745da504a9e6e
     container_name: coder
+    depends_on:
+      coder-postgres:
+        condition: service_healthy
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_DIR}/coder:/home/coder
-    env_file:
-      - ../.secrets/coder
     environment:
       CODER_HTTP_ADDRESS: 0.0.0.0:7080
       CODER_ACCESS_URL: "https://coder.${HOST}"
@@ -16,9 +17,8 @@ services:
       CODER_OIDC_SCOPES: openid,profile,email,offline_access
       CODER_OIDC_ISSUER_URL: ${AUTHENTIK_HOST}/application/o/coder/
       CODER_WILDCARD_ACCESS_URL: '*.coder.${HOST}'
-    group_add:
-      - 986
-    user: ${PUID}:${PGID}
+    env_file:
+      - ../.secrets/coder
     restart: unless-stopped
     labels:
       readme.description: Secure environments for developers and their agents
@@ -36,9 +36,9 @@ services:
       traefik.http.routers.coder-wildcard.tls.domains[0].sans: '*.coder.${HOST}'
       traefik.http.routers.coder-wildcard.service: coder-wildcard
       traefik.http.services.coder-wildcard.loadbalancer.server.port: 7080
-    depends_on:
-      coder-postgres:
-        condition: service_healthy
+    user: ${PUID}:${PGID}
+    group_add:
+      - 986
   coder-postgres:
     image: postgres:18.6-alpine3.24@sha256:77f585114c32fbca283dc835b0596f4e52b51b4c6662d7810b2f4084f60a1873
     container_name: coder-postgres
