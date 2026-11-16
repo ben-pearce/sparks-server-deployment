@@ -5,7 +5,7 @@ services:
     container_name: syncthing
     volumes:
       - ${DATA_DIR}/syncthing:/config
-      - ${DATA_DIR}/code:/code
+      - cloud:/sync
     environment:
       PUID: ${PUID}
       PGID: ${PGID}
@@ -24,3 +24,9 @@ services:
       traefik.http.routers.syncthing.tls.certresolver: resolver
       traefik.http.services.syncthing.loadbalancer.server.port: 8384
     hostname: ${HOST}
+volumes:
+  cloud:
+    driver_opts:
+      type: 'nfs'
+      o: 'addr=${NFS_HOST},nolock,soft,nfsvers=4'
+      device: ':/mnt/turbo/cloud'
